@@ -1,0 +1,28 @@
+.navbar {
+    background-color: purple;
+    height: 20%;
+    padding: 0% 10%;
+    display: flex;
+    justify-content: space-between;
+}
+.logo {
+    /* background-color: palevioletred; */
+    height: 100%;   
+}
+.logo > img {
+    height: 80%;
+    width: auto;
+}
+.logo > h2 {
+    text-align: center;
+}
+.menu {
+    /* background-color: palevioletred; */
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.menu > img {
+    height: 70%;
+    width: auto;
+}
