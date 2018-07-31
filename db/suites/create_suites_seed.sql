@@ -12,6 +12,8 @@ CREATE TABLE suites (
     fridge BOOLEAN DEFAULT FALSE,
     closet BOOLEAN DEFAULT FALSE,
     wi_fi BOOLEAN DEFAULT FALSE,
+    balcony BOOLEAN DEFAULT FALSE,
+    patio BOOLEAN DEAFAULT FALSE,
     weekday_price DECIMAL NOT NULL,
     weekend_price DECIMAL NOT NULL,
     special_id INTEGER REFERENCES specials(id)
