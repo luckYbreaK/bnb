@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import axios from "axios";
 import { updateSuites } from "../../ducks/reducer";
+import Card from "../Card/Card";
 import "./Home.css";
 
 class Home extends Component {
@@ -14,11 +15,14 @@ class Home extends Component {
 
     render() {
         let { suites } = this.props
+        console.log(suites);
+        
         let random = suites ? Math.floor(Math.random() * suites.length) : 0;
+        
         return (
             <div className="home_container">
                 <div className="card_container">
-                    Home
+                    <Card />
                 {/* displays a random suite */}
                     {suites[random] ? suites[random].title : ""}
                 </div>
