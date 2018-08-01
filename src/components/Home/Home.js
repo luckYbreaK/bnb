@@ -1,8 +1,10 @@
 import React, { Component } from "react";
-import { connect } from "react-redux";
 import axios from "axios";
-import { updateSuites, updateImages } from "../../ducks/reducer";
+import { connect } from "react-redux";
+
+import { updateSuites } from "../../ducks/reducer";
 import Card from "../Card/Card";
+
 import "./Home.css";
 
 // Imports a local file with the images
@@ -30,20 +32,10 @@ class Home extends Component {
     }
 
     render() {
-        let { suites } = this.props
-
-        console.log(suites);
-
-        let random = suites ? Math.floor(Math.random() * suites.length) : 0;
-        let image = suites[random] ? suites[random].img : "";
-
         return (
             <div className="home_container">
                 <div className="card_container">
                     <Card />
-                    <img src={image} />
-                    {/* displays a random suite */}
-                    {suites[random] ? suites[random].title : ""}
                 </div>
                 <div className="specials_container">
                     Specials
@@ -59,11 +51,4 @@ class Home extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        suites: state.suites,
-        images: state.images
-    }
-}
-
-export default connect(mapStateToProps, { updateSuites, updateImages })(Home);
+export default connect(null, { updateSuites })(Home);
