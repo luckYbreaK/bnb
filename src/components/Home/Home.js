@@ -11,42 +11,37 @@ const regex = /\b[A-Za-z]+/;
 
 class Home extends Component {
     componentDidMount() {
-        let { updateSuites, updateImages } = this.props;
+        let { updateSuites } = this.props;
         axios.get("/api/suites").then(res => {
-            updateSuites(res.data);
-        });
+            let addImgToSuites = res.data.map(suite => {
+                let updatedSuite = {};
 
-        updateImages(context.keys());
+                context.keys().forEach(key => {
+                    if (suite.title.includes(key.match(regex)[0])) {
+                        updatedSuite = Object.assign({}, suite, { img: context(key) });
+                    }
+                });
+
+                return updatedSuite;
+            })
+
+            updateSuites(addImgToSuites);
+        });
     }
 
     render() {
-        let { suites, images } = this.props
+        let { suites } = this.props
 
-        let results = suites.map(suite => {
-            // console.log(suite.title);
-
-            let newObj = {};
-            for (let i = 0; i < context.keys().length; i++) {
-                let arr = context.keys()[i].match(regex)
-                if (suite.title.includes(arr[0]))
-                    newObj = Object.assign({}, suite, { img: context(context.keys()[i]) });
-            }
-            return newObj;
-        })
-        // console.log(context.keys());
-
-        console.log(results);
+        console.log(suites);
 
         let random = suites ? Math.floor(Math.random() * suites.length) : 0;
-        let image = results[3] ? results[3].img : "";
-        // let image = images[2] ? images[2] : "";
-        
+        let image = suites[random] ? suites[random].img : "";
 
         return (
             <div className="home_container">
                 <div className="card_container">
                     <Card />
-                    <img src={image}/>
+                    <img src={image} />
                     {/* displays a random suite */}
                     {suites[random] ? suites[random].title : ""}
                 </div>
