@@ -1,44 +1,44 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import axios from "axios";
-import { updateSuites } from "../../ducks/reducer";
 
-// Imports a local file with the images
-const context = require.context("../../img", true, /\.(jpg)$/);
-
+import Card from "../Card/Card";
+import CarouselSlider from "react-carousel-slider";
 
 class Suites extends Component {
-    componentDidMount() {
-        let { updateSuites } = this.props;
-        axios.get("/api/suites").then(res => {
-            updateSuites(res.data);
-        });
-    }
-
     render() {
         let { suites } = this.props;
 
         let mappedSuites = suites.map((suite, i) => {
             return (
-                <div key={i}>
-                    {/* <img src={context(context.keys()[3])} alt=""/> */}
-                    {suite.title}
-                </div>
+                {
+                    des: suite.title,
+                    imgSrc: suite.img
+                }
             );
         });
 
-        // let photos = context.keys().map(filename => {
-        //     array.push(filename);
-        //     return <img src={(context(filename))} />
-        // });
-        
+        let manner = {
+            circular: false
+        };
+
+        let sliderBoxStyle = {
+            height: "400px",
+            width: "320px",
+            background: "transparent"
+        };
+
+        let buttonSetting = {
+            placeOn: "middle-outside"
+            // hoverEvent: true
+        }
+
         return (
-            <div>
-                Suites
-                {mappedSuites}
-                {/* {photos} */}
-                
-            </div>
+            <CarouselSlider
+                slideItems={mappedSuites}
+                manner={manner}
+                sliderBoxStyle={sliderBoxStyle}
+                buttonSetting={buttonSetting}
+            />
         );
     }
 }
@@ -49,4 +49,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { updateSuites })(Suites);
+export default connect(mapStateToProps, null)(Suites);
