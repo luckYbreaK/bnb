@@ -12,15 +12,7 @@ export default class Nav extends Component {
         this.state = {
             showMenu: false
         }
-
-        
     }
-
-    // showMenu() {
-    //     this.setState({
-    //         showMenu: 
-    //     });
-    // }
 
     render() {
         return (

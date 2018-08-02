@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import Card from "../Card/Card";
 import CarouselSlider from "react-carousel-slider";
 
 class Suites extends Component {
