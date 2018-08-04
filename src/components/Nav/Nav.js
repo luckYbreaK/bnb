@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+
 
 import logo from "../../img/logo/logo.png";
 
@@ -10,8 +12,24 @@ export default class Nav extends Component {
         super();
 
         this.state = {
-            showMenu: false
+            showMenu: false,
         }
+
+        this.login = this.login.bind(this);
+    }
+
+    login() {
+        let { REACT_APP_AUTH0_DOMAIN, REACT_APP_AUTH0_CLIENT_ID } = process.env;
+        let url = `${encodeURIComponent(window.location.origin)}/auth/callback`
+        window.location = `https://${REACT_APP_AUTH0_DOMAIN}/authorize?client_id=${REACT_APP_AUTH0_CLIENT_ID}&scope=openid%20profile%20email&redirect_uri=${url}&response_type=code`;
+    }
+
+    logout() {
+        axios.get('/api/logout').then(() => {
+            // this.setState({ user: null });
+            console.log("logged out!");
+            
+        });
     }
 
     render() {
@@ -34,7 +52,8 @@ export default class Nav extends Component {
                                     <ul>
                                         <Link to="/suites"><li>Suites</li></Link>
                                         <li>Register</li>
-                                        <li>Sign In</li>
+                                        <li onClick={this.login}>Sign In</li>
+                                        <li onClick={this.logout}>Sign Out</li>
                                     </ul>
                                 </div>
                             )

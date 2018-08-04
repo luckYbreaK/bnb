@@ -4,8 +4,10 @@ const express = require("express"),
     massive = require("massive"),
     session = require("express-session"),
     cors = require("cors"),
+    axios = require("axios"),
     stripe = require("stripe")(process.env.SECRET_KEY),
     suites = require("./controllers/suites");
+    auth0 = require("./controllers/auth0");
     
 
 
@@ -27,8 +29,6 @@ app.use((req, res, next) => {
         next();
     } else {
         req.session.user = {
-            user: "",
-            email: "",
             cart: []
         }
         console.log(req.session.user);
@@ -39,6 +39,8 @@ app.use((req, res, next) => {
 
 // ENDPOINTS
 app.get("/api/suites", suites.readSuites);
+app.get("/auth/callback", auth0.loginUser);
+app.get('/api/logout', auth0.logoutUser);
 app.post('/api/payment', function(req, res, next){
     //convert amount to pennies
     const amountArray = req.body.amount.toString().split('');
