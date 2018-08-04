@@ -7,8 +7,8 @@ import { DateRangePicker } from 'react-dates';
 import moment from 'moment';
 
 class Reservations extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       startDate: null,
       endDate: null,
