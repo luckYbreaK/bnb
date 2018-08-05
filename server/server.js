@@ -59,7 +59,7 @@ app.get('/auth/callback', async (req, res) => {
     let responseWithUserData = await axios.get(`https://${process.env.REACT_APP_AUTH0_DOMAIN}/userinfo/?access_token=${responseWithToken.data.access_token}`);
 
     req.session.user = Object.assign({}, req.session.user, responseWithUserData.data);
-    res.redirect('/');
+    res.redirect('/suites');
 });
 app.get('/api/logout', auth0.logoutUser);
 app.post('/api/payment', function (req, res, next) {
