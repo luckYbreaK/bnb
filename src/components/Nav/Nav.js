@@ -13,16 +13,23 @@ export default class Nav extends Component {
 
         this.state = {
             showMenu: false,
+            loggedIn: false
         }
 
-        this.login = this.login.bind(this);
+        // this.login = this.login.bind(this);
+    }
+
+    componentDidMount() {
+        axios.get("/api/userData").then(res => {
+            console.log(res);      
+        })
     }
 
     login() {
-        let { REACT_APP_AUTH0_DOMAIN, REACT_APP_AUTH0_CLIENT_ID } = process.env;
+        let {REACT_APP_AUTH0_DOMAIN, REACT_APP_AUTH0_CLIENT_ID} = process.env;
         let url = `${encodeURIComponent(window.location.origin)}/auth/callback`
         window.location = `https://${REACT_APP_AUTH0_DOMAIN}/authorize?client_id=${REACT_APP_AUTH0_CLIENT_ID}&scope=openid%20profile%20email&redirect_uri=${url}&response_type=code`;
-    }
+      }
 
     logout() {
         axios.get('/api/logout').then(() => {

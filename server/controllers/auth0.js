@@ -2,11 +2,12 @@ const { REACT_APP_AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, REACT_APP_AUTH0_DOMAIN }
 
 module.exports = {
     loginUser: async (req, res) => {
-
+        console.log(req.query);
+        
         let payload = {
             client_id: REACT_APP_AUTH0_CLIENT_ID,
             client_secret: AUTH0_CLIENT_SECRET,
-            code: req.body.code,
+            code: req.query.code,
             grant_type: 'authorization code',
             redirect_uri: `http://${req.headers.host}/auth/callback`
         }
@@ -16,7 +17,9 @@ module.exports = {
         let responseWithUserData = await axios.get(`https://${REACT_APP_AUTH0_DOMAIN}/userinfo/?access_token=${responseWithToken.data.access_token}`);
 
         req.session.user = Object.assign({}, req.session.user, responseWithUserData.data);
-        res.redirect("/");
+        console.log(req.session.user);
+        
+        res.redirect("/suites");
     },
 
     logoutUser: (req, res) => {
