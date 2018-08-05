@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-
+import { DateRangePicker } from 'react-dates';
+import moment from 'moment';
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 
-import { DateRangePicker } from 'react-dates';
-import moment from 'moment';
+import Cart from "../Cart/Cart";
 
 class Reservations extends Component {
   constructor() {
@@ -34,7 +34,8 @@ class Reservations extends Component {
           focusedInput={this.state.focusedInput}
           onFocusChange={(focusedInput) => { this.setState({ focusedInput }) }}
         />
-        <button>Reserve</button>
+        <button>Book</button>
+        <Cart />
       </div>
     );
   }

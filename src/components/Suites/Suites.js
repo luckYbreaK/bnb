@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
+import { Link } from "react-router-dom";
 import CarouselSlider from "react-carousel-slider";
 
 class Suites extends Component {
@@ -32,12 +32,15 @@ class Suites extends Component {
         }
 
         return (
-            <CarouselSlider
-                slideItems={mappedSuites}
-                manner={manner}
-                sliderBoxStyle={sliderBoxStyle}
-                buttonSetting={buttonSetting}
-            />
+            <div>
+                <Link to="/reservations"><button>Reserve Suite</button></Link>
+                <CarouselSlider
+                    slideItems={mappedSuites}
+                    manner={manner}
+                    sliderBoxStyle={sliderBoxStyle}
+                    buttonSetting={buttonSetting}
+                />
+            </div>
         );
     }
 }
