@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-
+import { connect } from "react-redux";
 
 import logo from "../../img/logo/logo.png";
+import { resetCart } from "../../ducks/reducer";
 
 import "./Nav.css";
 
-export default class Nav extends Component {
+class Nav extends Component {
     constructor() {
         super();
 
@@ -17,29 +18,32 @@ export default class Nav extends Component {
         }
 
         // this.login = this.login.bind(this);
+        this.logout = this.logout.bind(this);
     }
 
-    componentDidMount() {
-        axios.get("/api/userData").then(res => {
-            console.log(res);      
-        })
-    }
+    // componentDidMount() {
+    //     axios.get("/api/userData").then(res => {
+    //         console.log(res);      
+    //     })
+    // }
 
     login() {
-        let {REACT_APP_AUTH0_DOMAIN, REACT_APP_AUTH0_CLIENT_ID} = process.env;
+        let { REACT_APP_AUTH0_DOMAIN, REACT_APP_AUTH0_CLIENT_ID } = process.env;
         let url = `${encodeURIComponent(window.location.origin)}/auth/callback`
         window.location = `https://${REACT_APP_AUTH0_DOMAIN}/authorize?client_id=${REACT_APP_AUTH0_CLIENT_ID}&scope=openid%20profile%20email&redirect_uri=${url}&response_type=code`;
-      }
+    }
 
     logout() {
-        axios.get('/api/logout').then(() => {
+        // axios.get('/api/logout').then(() => {
             // this.setState({ user: null });
-            console.log("logged out!");
-            
-        });
+        // });
+        
+        this.props.resetCart();
+        console.log("logged out!");
     }
 
     render() {
+        console.log(this.props);
         return (
             <div className="navbar">
                 <div className="logo">
@@ -73,3 +77,5 @@ export default class Nav extends Component {
         );
     }
 }
+
+export default connect(null, { resetCart })(Nav);

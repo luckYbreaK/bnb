@@ -40,6 +40,15 @@ app.get("/api/userData", usersCtrl.readUserData);
 app.get("/api/suites", suitesCtrl.readSuites);
 app.get('/auth/callback', auth0Ctrl.loginUser);
 app.get('/api/logout', auth0Ctrl.logoutUser);
+// Update later to add to db
+// app.post("/api/cart", (req, res) => {
+//     console.log("req.body",req.body.suite);
+    
+//     req.session.user.cart.push(req.body.suite)
+//     console.log("req.session", req.session.user.cart);
+    
+//     res.status(200).send(req.session.user.cart);
+// })
 app.post('/api/payment', stripeCtrl.charge);
 
 massive(CONNECTION_STRING).then(db => {
