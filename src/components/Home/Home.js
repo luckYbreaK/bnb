@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import { updateSuites } from "../../ducks/reducer";
 import Card from "../Card/Card";
 
+
 import "./Home.css";
 
 // Imports a local file with the images
@@ -12,6 +13,7 @@ const context = require.context("../../img/card", true, /\.(jpg)$/);
 const regex = /\b[A-Za-z]+/;
 
 class Home extends Component {
+
     componentDidMount() {
         let { updateSuites } = this.props;
         axios.get("/api/suites").then(res => {
