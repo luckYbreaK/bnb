@@ -1,12 +1,14 @@
 const initialState = {
     //array of objects
     suites: [],
-    cart: []
+    cart: [],
+    selectedSuite: {}
 }
 
 const UPDATE_SUITES = "UPDATE_SUITES";
 const UPDATE_CART = "UPDATE_CART";
 const RESET_CART = "RESET_CART";
+const UPDATE_SELECTED_SUITE = "UPDATE_SELECTED_SUITE";
 // const UPDATE_IMAGES = "UPDATE_IMAGES";
 
 export function updateSuites(suites) {
@@ -29,6 +31,13 @@ export function resetCart() {
     }
 }
 
+export function updateSelectedSuite(suite) {
+    return {
+        type: UPDATE_SELECTED_SUITE,
+        payload: suite
+    }
+}
+
 // export function updateImages(images) {
 //     return {
 //         type: UPDATE_IMAGES,
@@ -44,6 +53,8 @@ export default function reducer(state = initialState, action) {
             return Object.assign({}, state, {cart: [...state.cart, action.payload]});
         case RESET_CART:
             return Object.assign({}, state, {cart: []});
+        case UPDATE_SELECTED_SUITE:
+            return Object.assign({}, state, {selectedSuite: action.payload});
         // case UPDATE_IMAGES:}
         //     return Object.assign({}, state, {images: action.payload});
         default:

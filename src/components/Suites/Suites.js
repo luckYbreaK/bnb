@@ -4,13 +4,14 @@ import { Link } from "react-router-dom";
 import CarouselSlider from "react-carousel-slider";
 
 import Modal from "../Modal/Modal";
+import { updateSelectedSuite } from "../../ducks/reducer";
 
 class Suites extends Component {
     constructor() {
         super();
 
         this.state = {
-            selectedSuite: {},
+            // selectedSuite: {},
             isOpen: false
         }
 
@@ -18,24 +19,27 @@ class Suites extends Component {
     }
 
     togleModal(openOrClose, suite) {
-        if(openOrClose === "open") {
+        let { updateSelectedSuite } = this.props;
+        if (openOrClose === "open") {
+            updateSelectedSuite(suite)
             this.setState({
-                selectedSuite: suite,
+                // selectedSuite: suite,
                 isOpen: !this.state.isOpen
             });
-        } else if(openOrClose === "close") {
+        } else if (openOrClose === "close") {
+            updateSelectedSuite(suite);
             this.setState({
-                selectedSuite: suite,
+                // selectedSuite: suite,
                 isOpen: !this.state.isOpen
             });
         }
-        
+
     }
 
     render() {
-        console.log(this.state.selectedSuite);
-        
-        let { suites } = this.props;
+        console.log(this.props.selectedSuite);
+
+        let { suites, selectedSuite } = this.props;
 
         let mappedSuites = suites.map((suite, i) =>
             // return (
@@ -80,16 +84,16 @@ class Suites extends Component {
                     sliderBoxStyle={sliderBoxStyle}
                     buttonSetting={buttonSetting}
                 />
-                 <Modal
+                <Modal
                     show={this.state.isOpen}
                     onClose={() => this.togleModal("close", {})}
                 >
-                    <img src={this.state.selectedSuite.img} alt={this.state.selectedSuite.title} />
-                    <h3>{this.state.selectedSuite.title}</h3>
-                    <p>{this.state.selectedSuite.description}</p>
-                    <p>${this.state.selectedSuite.weekday_price}</p>
-                    <p>${this.state.selectedSuite.weekend_price}</p>
-                    <p>{this.state.selectedSuite.description}</p>
+                    <img src={selectedSuite.img} alt={selectedSuite.title} />
+                    <h3>{selectedSuite.title}</h3>
+                    <p>{selectedSuite.description}</p>
+                    <p>${selectedSuite.weekday_price}</p>
+                    <p>${selectedSuite.weekend_price}</p>
+                    <p>{selectedSuite.description}</p>
                 </Modal>
             </div>
         );
@@ -98,8 +102,9 @@ class Suites extends Component {
 
 function mapStateToProps(state) {
     return {
-        suites: state.suites
+        suites: state.suites,
+        selectedSuite: state.selectedSuite
     }
 }
 
-export default connect(mapStateToProps, null)(Suites);
+export default connect(mapStateToProps, { updateSelectedSuite })(Suites);
