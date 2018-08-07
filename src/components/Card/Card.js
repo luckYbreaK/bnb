@@ -23,9 +23,7 @@ class Card extends Component {
 
     render() {
         let { suites } = this.props
-        console.log(suites);
         
-
         // let random = suites ? Math.floor(Math.random() * suites.length) : 0;
         let image = suites[0] ? suites[0].img : "";
         let suite = suites[0] ? suites[0].title : "";
