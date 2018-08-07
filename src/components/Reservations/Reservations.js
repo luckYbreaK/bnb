@@ -10,55 +10,65 @@ import Cart from "../Cart/Cart";
 import { updateCart } from "../../ducks/reducer";
 
 class Reservations extends Component {
-    constructor() {
-      super();
-      this.state = {
-        startDate: null,
-        endDate: null,
-        focusedInput: null,
-      };
+  constructor() {
+    super();
+    this.state = {
+      startDate: null,
+      endDate: null,
+      focusedInput: null,
+    };
 
-      this.addSuiteToCart = this.addSuiteToCart.bind(this);
+    this.addSuiteToCart = this.addSuiteToCart.bind(this);
+  }
+
+  addSuiteToCart() {
+    // let suite = this.props.suites[0]
+    // axios.post("/api/cart", { suite }).then(res => {
+    //   this.props.updateCart(res.data);
+
+    // })
+    if (this.state.startDate && this.state.endDate) {
+      this.props.updateCart(this.props.selectedSuite)
+    } else {
+      alert("Please select dates");
     }
 
-    addSuiteToCart() {
-      // let suite = this.props.suites[0]
-      // axios.post("/api/cart", { suite }).then(res => {
-      //   this.props.updateCart(res.data);
+  }
 
-      // })
-      this.props.updateCart(this.props.suites[0])
-    }
+  render() {
 
-    render() {
-
-      const RESERVATIONS = [moment(), moment().add(10, 'days')];
-      const isDayBlocked = day => RESERVATIONS.filter(moment => moment.isSame(day, 'day')).length > 0;
-      // let day = moment("2018-08-10").add(5, 'd');
-      // const isDayBlocked = d => d.isSame(day, 'day'); 
-      return (
+    const RESERVATIONS = [moment(), moment().add(10, 'days')];
+    const isDayBlocked = day => RESERVATIONS.filter(moment => moment.isSame(day, 'day')).length > 0;
+    // let day = moment("2018-08-10").add(5, 'd');
+    // const isDayBlocked = d => d.isSame(day, 'day'); 
+    return (
+      <div>
+        <DateRangePicker
+          startDateId="startDate"
+          endDateId="endDate"
+          startDate={this.state.startDate}
+          endDate={this.state.endDate}
+          numberOfMonths={1}
+          isDayBlocked={isDayBlocked}
+          onDatesChange={({ startDate, endDate }) => { this.setState({ startDate, endDate }) }}
+          focusedInput={this.state.focusedInput}
+          onFocusChange={(focusedInput) => { this.setState({ focusedInput }) }}
+        />
         <div>
-          <DateRangePicker
-            startDateId="startDate"
-            endDateId="endDate"
-            startDate={this.state.startDate}
-            endDate={this.state.endDate}
-            numberOfMonths={1}
-            isDayBlocked={isDayBlocked}
-            onDatesChange={({ startDate, endDate }) => { this.setState({ startDate, endDate }) }}
-            focusedInput={this.state.focusedInput}
-            onFocusChange={(focusedInput) => { this.setState({ focusedInput }) }}
-          />
-          <button onClick={this.addSuiteToCart}>Book</button>
+          <button onClick={this.addSuiteToCart}>Book Dates</button>
+        </div>
+        <div>
           <Cart />
         </div>
-      );
-    }
+      </div>
+    );
   }
+}
 
 function mapStateToProps(state) {
   return {
-    suites: state.suites
+    suites: state.suites,
+    selectedSuite: state.selectedSuite
   }
 }
 

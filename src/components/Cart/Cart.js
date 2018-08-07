@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import axios from "axios";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 
 class Cart extends Component {
-// constructor() {
-//     super();
+    // constructor() {
+    //     super();
 
-//     this.state = {
-//         cart: []
-//     }
-// }
+    //     this.state = {
+    //         cart: []
+    //     }
+    // }
 
     // componentDidMount() {
     //     axios.get("/api/userData").then(res => {
@@ -25,22 +25,27 @@ class Cart extends Component {
 
     render() {
         console.log(this.props.cart);
-        
-        let mappedCart = this.props.cart.map((item,i) => {
-            return(
+
+        let mappedCart = this.props.cart.map((item, i) => {
+            return (
                 <div key={i}>
                     <h1>{item.title}</h1>
-                    <img src={item.img} alt={item.title}/>
+                    <img src={item.img} alt={item.title} />
+                    <p>${item.weekday_price}</p>
+                    <p>${item.weekend_price}</p>
                 </div>
             );
         });
-        
+
         return (
             <div>
                 {this.props.cart.length === 0 ?
-                null 
-                :
-                <div>{mappedCart}</div>     
+                    null
+                    :
+                    <div>
+                        {mappedCart}
+                        <button>Checkout</button>
+                    </div>
                 }
             </div>
         );
