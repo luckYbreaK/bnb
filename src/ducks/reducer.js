@@ -9,7 +9,8 @@ const initialState = {
 
 const UPDATE_SUITES = "UPDATE_SUITES";
 const UPDATE_CART = "UPDATE_CART";
-const DELETE_ITEM_FROM_CART = "DELETE_ITEM_FROM_CART"
+const DELETE_ITEM_FROM_CART = "DELETE_ITEM_FROM_CART";
+const REFRESH_CART = "REFRESH_CART";
 const RESET_CART = "RESET_CART";
 const UPDATE_SELECTED_SUITE = "UPDATE_SELECTED_SUITE";
 // const UPDATE_IMAGES = "UPDATE_IMAGES";
@@ -35,9 +36,16 @@ export function deleteItemFromCart(id) {
     }
 }
 
-export function resetCart() {
+export function refreshCart() {
     return {
-        type: RESET_CART
+        type: REFRESH_CART,
+    }
+}
+
+export function resetCart(cart) {
+    return {
+        type: RESET_CART,
+        payload: cart
     }
 }
 
@@ -61,10 +69,11 @@ export default function reducer(state = initialState, action) {
             return Object.assign({}, state, {suites: action.payload});
         case UPDATE_CART:
             return Object.assign({}, state, {cart: [...state.cart, action.payload]});
+        case REFRESH_CART:
+            return Object.assign({}, state, {cart: action.payload})
         case DELETE_ITEM_FROM_CART:
             console.log("state",state.cart);
-            
-            let proxyCart = state.cart;
+            let proxyCart = [...state.cart];
             let index = _.findIndex(proxyCart, ['id', action.payload])
             if(index !== -1){
                 proxyCart.splice(index, 1);

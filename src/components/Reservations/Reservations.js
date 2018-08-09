@@ -16,8 +16,6 @@ class Reservations extends Component {
       startDate: null,
       endDate: null,
       focusedInput: null,
-      numOfWeekdays: 0,
-      numOfWeekendDays: 0
     };
 
     this.addSuiteToCart = this.addSuiteToCart.bind(this);
@@ -43,11 +41,6 @@ class Reservations extends Component {
   }
 
   addSuiteToCart() {
-    // let suite = this.props.suites[0]
-    // axios.post("/api/cart", { suite }).then(res => {
-    //   this.props.updateCart(res.data);
-
-    // })
     if (this.state.startDate && this.state.endDate) {
       let addPropsToSelectedSuite = this.props.selectedSuite;
       addPropsToSelectedSuite.startDate = this.state.startDate;
@@ -57,7 +50,6 @@ class Reservations extends Component {
     } else {
       alert("Please select dates");
     }
-
   }
 
   render() {
@@ -68,6 +60,11 @@ class Reservations extends Component {
     // const isDayBlocked = d => d.isSame(day, 'day'); 
     return (
       <div>
+        <div>
+          <h3>Selected Suite:</h3>
+          <img src={this.props.selectedSuite.img} alt={this.props.selectedSuite.title} />
+        </div>
+
         <DateRangePicker
           startDateId="startDate"
           endDateId="endDate"
@@ -82,13 +79,8 @@ class Reservations extends Component {
         <div>
           <button onClick={this.addSuiteToCart}>Book Dates</button>
         </div>
-        {/* <div>
-          <button onClick={() => this.isWeekend(this.state.startDate, this.state.endDate)}>Weekend</button>
-        </div> */}
         <div>
           <Cart
-            numOfWeekdays={this.state.numOfWeekdays}
-            numOfWeekendDays={this.state.numOfWeekendDays}
           />
         </div>
       </div>

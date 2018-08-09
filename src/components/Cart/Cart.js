@@ -2,9 +2,17 @@ import React, { Component } from "react";
 import axios from "axios";
 import moment from "moment";
 import { connect } from "react-redux";
-import { deleteItemFromCart } from "../../ducks/reducer";
+import { refreshCart, deleteItemFromCart } from "../../ducks/reducer";
 
 class Cart extends Component {
+    // componentDidUpdate(prevProps) {
+    //     if (this.props.cart !== prevProps.cart) {
+    //      console.log("componentdidupdate",this.props.cart);
+         
+         
+    //     }
+    //   }      
+
     handleCheckout() {
         axios.get("/api/userData").then(res => {
             let email = null;
@@ -20,15 +28,12 @@ class Cart extends Component {
 
     render() {
         console.log(this.props);
-        let { numOfWeekdays, numOfWeekendDays, deleteItemFromCart } = this.props
+        let { deleteItemFromCart } = this.props
 
         let mappedCart = this.props.cart.map((item, i) => {
             return (
                 <div key={i}>
-                    <button onClick={() => {
-                        console.log("selected");
-                        return deleteItemFromCart(item.id)
-                    }}>X</button>
+                    <button onClick={() => deleteItemFromCart(item.id)}>X</button>
                     <h1>{item.title}</h1>
                     <img src={item.img} alt={item.title} />
                     <p>Total: ${item.total}</p>
@@ -57,4 +62,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { deleteItemFromCart })(Cart);
+export default connect(mapStateToProps, { refreshCart, deleteItemFromCart })(Cart);

@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import StripeCheckout from "react-stripe-checkout";
 import axios from "axios";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
+import { resetCart } from "../../ducks/reducer";
+
 
 
 
@@ -16,12 +18,14 @@ class Checkout extends Component {
         axios.post('/api/payment', { token, amount: this.getTotal() }).then(response => {
             alert('we are in business')
         });
+        // this.props.resetCart();
+        this.props.history.push("/");
     }
 
     render() {
-        console.log(this.props.cart ? this.props.cart[0].total : "loading");
-        
-        let {REACT_APP_PUB_KEY} = process.env;
+        console.log(this.props)
+
+        let { REACT_APP_PUB_KEY } = process.env;
         return (
             <div>
                 <StripeCheckout
@@ -40,4 +44,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps)(Checkout);
+export default connect(mapStateToProps, { resetCart })(Checkout);
