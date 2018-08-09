@@ -1,3 +1,5 @@
+import _ from "lodash";
+
 const initialState = {
     //array of objects
     suites: [],
@@ -7,6 +9,7 @@ const initialState = {
 
 const UPDATE_SUITES = "UPDATE_SUITES";
 const UPDATE_CART = "UPDATE_CART";
+const DELETE_ITEM_FROM_CART = "DELETE_ITEM_FROM_CART"
 const RESET_CART = "RESET_CART";
 const UPDATE_SELECTED_SUITE = "UPDATE_SELECTED_SUITE";
 // const UPDATE_IMAGES = "UPDATE_IMAGES";
@@ -22,6 +25,13 @@ export function updateCart(itemObj) {
     return {
         type: UPDATE_CART,
         payload: itemObj
+    }
+}
+
+export function deleteItemFromCart(id) {
+    return {
+        type: DELETE_ITEM_FROM_CART,
+        payload: id
     }
 }
 
@@ -51,6 +61,16 @@ export default function reducer(state = initialState, action) {
             return Object.assign({}, state, {suites: action.payload});
         case UPDATE_CART:
             return Object.assign({}, state, {cart: [...state.cart, action.payload]});
+        case DELETE_ITEM_FROM_CART:
+            console.log("state",state.cart);
+            
+            let proxyCart = state.cart;
+            let index = _.findIndex(proxyCart, ['id', action.payload])
+            if(index !== -1){
+                proxyCart.splice(index, 1);
+              }
+              console.log("proxy",proxyCart);
+            return Object.assign({}, state, {cart: proxyCart}); 
         case RESET_CART:
             return Object.assign({}, state, {cart: []});
         case UPDATE_SELECTED_SUITE:

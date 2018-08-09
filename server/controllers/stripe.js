@@ -3,7 +3,7 @@ stripe = require("stripe")(process.env.SECRET_KEY),
 module.exports = {
     charge: (req, res, next) => {
         //convert amount to pennies
-        console.log(req.body.amount);
+        // console.log(req.body.amount);
         
         // const amountArray = req.body.amount.toString().split('');
         // const pennies = [];
@@ -25,12 +25,12 @@ module.exports = {
         //     }
         // }
         // const convertedAmt = parseInt(pennies.join(''));
-        const convertedAmt = req.body.amount * 100;
-        console.log(convertedAmt);
+        // const convertedAmt = req.body.amount * 100;
+        // console.log(convertedAmt);
         
     
         const charge = stripe.charges.create({
-            amount: convertedAmt, // amount in cents, again
+            amount: req.body.amount, // amount in cents, again
             currency: 'usd',
             source: req.body.token.id,
             description: 'Test charge from react app'

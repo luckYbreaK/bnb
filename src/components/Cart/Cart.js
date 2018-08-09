@@ -1,38 +1,37 @@
 import React, { Component } from "react";
 import axios from "axios";
+import moment from "moment";
 import { connect } from "react-redux";
+import { deleteItemFromCart } from "../../ducks/reducer";
 
 class Cart extends Component {
-    // constructor() {
-    //     super();
-
-    //     this.state = {
-    //         cart: []
-    //     }
-    // }
-
-    // componentDidMount() {
-    //     axios.get("/api/userData").then(res => {
-    //         this.setState({
-    //             cart: res.data.cart
-    //         });
-    //     })
-    // }
-
-    // componentDidUpdate() {
-
-    // }
+    handleCheckout() {
+        axios.get("/api/userData").then(res => {
+            let email = null;
+            let { data } = res;
+            if (typeof data === "string") {
+                alert(data)
+            } else {
+                email = data.email;
+                window.location = "http://localhost:3000/#/checkout";
+            }
+        })
+    }
 
     render() {
-        console.log(this.props.cart);
+        console.log(this.props);
+        let { numOfWeekdays, numOfWeekendDays, deleteItemFromCart } = this.props
 
         let mappedCart = this.props.cart.map((item, i) => {
             return (
                 <div key={i}>
+                    <button onClick={() => {
+                        console.log("selected");
+                        return deleteItemFromCart(item.id)
+                    }}>X</button>
                     <h1>{item.title}</h1>
                     <img src={item.img} alt={item.title} />
-                    <p>${item.weekday_price}</p>
-                    <p>${item.weekend_price}</p>
+                    <p>Total: ${item.total}</p>
                 </div>
             );
         });
@@ -44,7 +43,7 @@ class Cart extends Component {
                     :
                     <div>
                         {mappedCart}
-                        <button>Checkout</button>
+                        <button onClick={() => this.handleCheckout()}>Checkout</button>
                     </div>
                 }
             </div>
@@ -58,4 +57,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, null)(Cart);
+export default connect(mapStateToProps, { deleteItemFromCart })(Cart);

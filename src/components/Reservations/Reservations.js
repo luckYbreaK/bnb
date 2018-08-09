@@ -16,9 +16,30 @@ class Reservations extends Component {
       startDate: null,
       endDate: null,
       focusedInput: null,
+      numOfWeekdays: 0,
+      numOfWeekendDays: 0
     };
 
     this.addSuiteToCart = this.addSuiteToCart.bind(this);
+    this.calcTotal = this.calcTotal.bind(this);
+  }
+
+  calcTotal(startDate, endDate, suite) {
+    // console.log(moment(date).format("ddd"));
+    let weekdays = 0;
+    let weekends = 0;
+    let total = 0;
+    let nightsReserved = moment(endDate).format("DDD") - moment(startDate).format("DDD");
+    for (let i = 0; i < nightsReserved; i++) {
+      let dayOfWeek = moment(moment(startDate).add(i, 'd')).format("ddd");
+      if (dayOfWeek === "Fri" || dayOfWeek === "Sat") {
+        weekends++;
+      } else {
+        weekdays++
+      }
+    }
+    total = (suite.weekday_price * weekdays) + (suite.weekend_price * weekends)
+    return total;
   }
 
   addSuiteToCart() {
@@ -28,7 +49,11 @@ class Reservations extends Component {
 
     // })
     if (this.state.startDate && this.state.endDate) {
-      this.props.updateCart(this.props.selectedSuite)
+      let addPropsToSelectedSuite = this.props.selectedSuite;
+      addPropsToSelectedSuite.startDate = this.state.startDate;
+      addPropsToSelectedSuite.endDate = this.state.endDate;
+      addPropsToSelectedSuite.total = this.calcTotal(this.state.startDate, this.state.endDate, this.props.selectedSuite);
+      this.props.updateCart(addPropsToSelectedSuite)
     } else {
       alert("Please select dates");
     }
@@ -57,8 +82,14 @@ class Reservations extends Component {
         <div>
           <button onClick={this.addSuiteToCart}>Book Dates</button>
         </div>
+        {/* <div>
+          <button onClick={() => this.isWeekend(this.state.startDate, this.state.endDate)}>Weekend</button>
+        </div> */}
         <div>
-          <Cart />
+          <Cart
+            numOfWeekdays={this.state.numOfWeekdays}
+            numOfWeekendDays={this.state.numOfWeekendDays}
+          />
         </div>
       </div>
     );
