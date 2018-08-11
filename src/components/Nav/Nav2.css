@@ -1,0 +1,15 @@
+.flex_row {
+    display: flex;
+  }
+  .toolbar {
+    justify-content: space-between;
+    padding: 0 8%;
+  }
+  .flex_column {
+    display: flex;
+    flex-direction: column;
+  }
+  img {
+    height: 90px;
+    width: auto;
+  }
