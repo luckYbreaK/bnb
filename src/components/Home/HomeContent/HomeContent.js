@@ -39,7 +39,7 @@ class HomeContent extends Component {
 
     render() {
         let { suites } = this.props
-        let suite = suites[3] ? suites[3] : "";
+        let suite = suites[5] ? suites[5] : "";
 
         return (
             <div>
@@ -56,12 +56,12 @@ class HomeContent extends Component {
                             title={suite.title}
                         />
                         <CardActions style={{ justifyContent: "center" }}>
-                            <div style={{ backgroundColor: 'white', width: "100%", display: "flex", justifyContent: "center", marginTop: "-70px", opacity: "0.7" }}>
+                            <div style={{ backgroundColor: 'rgb(117, 117, 117)', width: "100%", display: "flex", justifyContent: "center", margin: "-70px 20px 0 20px", opacity: "0.6", borderRadius: "5px"}}>
                                 {/* <IconButton color="primary" style={{ opacity: "1" }} onClick={this.handleOpen}>
                                         <Info />
                                     </IconButton> */}
                                 <Button
-                                    style={{ opacity: "1" }}
+                                    style={{color: "white"}}
                                     onClick={() => this.handleOpen(suite)}
                                 >
                                     View Details
@@ -83,14 +83,14 @@ class HomeContent extends Component {
 
                 <div>
                     <Card style={{ maxWidth: 400, borderRadius: 0 }}>
+                        <CardHeader
+                            title="The Castle on the Creek"
+                            subheader="A Royal Experience"
+                        />
                         <CardMedia
                             style={{ height: 0, paddingTop: '56.25%', backgroundPosition: "center top" }}
                             image="/img.1/castlecreekExterior/buildingFrontWithSign.jpeg"
                             title="Castle Creek Inn"
-                        />
-                        <CardHeader
-                            title="The Castle on the Creek"
-                            subheader="A Royal Experience"
                         />
                         <CardContent>
                             <Typography component="p" gutterBottom>

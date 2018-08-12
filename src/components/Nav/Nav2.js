@@ -80,12 +80,12 @@ class Nav2 extends Component {
                                     onKeyDown={this.toggleDrawer}
                                 >
                                     <List >
-                                        <Link to="/suites">
+                                        <Link to="/suites" style={{textDecoration: "none"}}>
                                             <ListItem button>
                                                 <ListItemIcon>
                                                     <Hotel />
                                                 </ListItemIcon>
-                                                <ListItemText primary="Suites" />
+                                                <ListItemText primary="Suites"/>
                                             </ListItem>
                                         </Link>
                                         <ListItem button>
