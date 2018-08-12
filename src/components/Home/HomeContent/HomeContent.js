@@ -27,17 +27,19 @@ class HomeContent extends Component {
         this.handleOpen = this.handleOpen.bind(this);
     }
 
-    handleOpen() {
+    handleOpen(suite) {
+        this.props.updateSelectedSuite(suite);
         this.setState({ open: true });
     };
 
-    handleClose() {
+    handleClose(suite) {
+        this.props.updateSelectedSuite(suite);
         this.setState({ open: false });
     };
 
     render() {
         let { suites } = this.props
-        let suite = suites[9] ? suites[9] : "";
+        let suite = suites[3] ? suites[3] : "";
 
         return (
             <div>
@@ -58,7 +60,12 @@ class HomeContent extends Component {
                                 {/* <IconButton color="primary" style={{ opacity: "1" }} onClick={this.handleOpen}>
                                         <Info />
                                     </IconButton> */}
-                                <Button style={{ opacity: "1" }} onClick={this.handleOpen}>View Details</Button>
+                                <Button
+                                    style={{ opacity: "1" }}
+                                    onClick={() => this.handleOpen(suite)}
+                                >
+                                    View Details
+                                </Button>
                             </div>
                         </CardActions>
                     </Card>
@@ -132,6 +139,7 @@ class HomeContent extends Component {
                 <SuiteModal
                     handleClose={this.handleClose}
                     open={this.state.open}
+                    selectedSuite={this.props.selectedSuite}
                 />
 
             </div>
@@ -141,7 +149,8 @@ class HomeContent extends Component {
 
 function mapStateToProps(state) {
     return {
-        suites: state.suites
+        suites: state.suites,
+        selectedSuite: state.selectedSuite
     }
 }
 
