@@ -72,13 +72,11 @@ export default function reducer(state = initialState, action) {
         case REFRESH_CART:
             return Object.assign({}, state, {cart: action.payload})
         case DELETE_ITEM_FROM_CART:
-            console.log("state",state.cart);
             let proxyCart = [...state.cart];
             let index = _.findIndex(proxyCart, ['id', action.payload])
             if(index !== -1){
                 proxyCart.splice(index, 1);
               }
-              console.log("proxy",proxyCart);
             return Object.assign({}, state, {cart: proxyCart}); 
         case RESET_CART:
             return Object.assign({}, state, {cart: []});

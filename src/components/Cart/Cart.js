@@ -2,7 +2,17 @@ import React, { Component } from "react";
 import axios from "axios";
 import moment from "moment";
 import { connect } from "react-redux";
-import { Card, CardContent, CardHeader, CardMedia, Typography, Button } from "@material-ui/core";
+import { 
+    Card, 
+    CardContent, 
+    CardHeader, 
+    CardMedia, 
+    Typography, 
+    Button,
+    IconButton,
+    Icon 
+} from "@material-ui/core";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 import { refreshCart, deleteItemFromCart } from "../../ducks/reducer";
 
@@ -54,8 +64,14 @@ class Cart extends Component {
                             title={item.title}
                         />
                         <CardContent>
-                            <Typography>
+                            <Typography style={{display: "flex", justifyContent: "space-between"}}>
                                 Price: ${item.total}
+                                <IconButton 
+                                    style={{marginTop: "-16px"}} 
+                                    onClick={() => deleteItemFromCart(item.id)}
+                                >
+                                    <DeleteIcon />
+                                </IconButton>
                             </Typography>
                         </CardContent>
                     </Card>

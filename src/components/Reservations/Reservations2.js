@@ -111,7 +111,7 @@ class Reservations2 extends Component {
                 </div>
 
                 <div style={{ display: "flex", justifyContent: "center" }}>
-                    <Link to="/cart">
+                    <Link to="/cart" style={{ textDecoration: "none" }}>
                         <Button
                             onClick={this.addSuiteToCart}
                             color="primary"
