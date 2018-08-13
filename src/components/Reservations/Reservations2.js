@@ -18,6 +18,7 @@ import {
 } from "@material-ui/core";
 
 import Cart from "../Cart/Cart";
+import AlertDialog from "../AlertDialog/AlertDialog";
 import { updateCart } from "../../ducks/reducer";
 
 class Reservations2 extends Component {
@@ -27,10 +28,13 @@ class Reservations2 extends Component {
             startDate: null,
             endDate: null,
             focusedInput: null,
+            open: false
         };
 
         this.addSuiteToCart = this.addSuiteToCart.bind(this);
         this.calcTotal = this.calcTotal.bind(this);
+        this.handleClickOpen = this.handleClickOpen.bind(this);
+        this.handleClose = this.handleClose.bind(this);
     }
 
     calcTotal(startDate, endDate, suite) {
@@ -59,8 +63,21 @@ class Reservations2 extends Component {
             addPropsToSelectedSuite.total = this.calcTotal(this.state.startDate, this.state.endDate, this.props.selectedSuite);
             this.props.updateCart(addPropsToSelectedSuite)
         } else {
-            alert("Please select dates");
+            // alert("Please select dates");
+            this.handleClickOpen();
         }
+    }
+
+    handleClickOpen() {
+        this.setState({
+            open: true
+        });
+    }
+
+    handleClose() {
+        this.setState({
+            open: false
+        });
     }
 
     render() {
@@ -110,16 +127,27 @@ class Reservations2 extends Component {
                         endDateId="endDate"
                         startDate={this.state.startDate}
                         endDate={this.state.endDate}
+                        startDatePlaceholderText="Arrive"
+                        endDatePlaceholderText="Depart"
+                        showClearDates
+                        reopenPickerOnClearDates
+                        showDefaultInputIcon
+                        small
                         numberOfMonths={1}
-                        showClearDates={PropTypes.true}
-                        reopenPickerOnClearDates={true}
-                        horizontalMargin={-100}
+                        keepOpenOnDateSelect
+                        withPortal
                         isDayBlocked={isDayBlocked}
                         onDatesChange={({ startDate, endDate }) => { this.setState({ startDate, endDate }) }}
                         focusedInput={this.state.focusedInput}
                         onFocusChange={(focusedInput) => { this.setState({ focusedInput }) }}
                     />
                 </div>
+
+                <AlertDialog 
+                    open={this.state.open}
+                    handleClose={this.handleClose}
+                    message="Please select dates"
+                />
 
             </div>
         );
