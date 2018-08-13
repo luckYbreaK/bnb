@@ -31,9 +31,15 @@ class Home2 extends Component {
 
     render() {
         return (
-            <HomeContent />
+            this.props.suites ? <HomeContent /> : "" 
         );
     }
 }
 
-export default connect(null, { updateSuites })(Home2);
+function mapStateToProps(state) {
+    return {
+        suites: state.suites
+    }
+}
+
+export default connect(mapStateToProps, { updateSuites })(Home2);

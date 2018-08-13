@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { DateRangePicker } from 'react-dates';
+import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -87,7 +88,7 @@ class Reservations2 extends Component {
         // let day = moment("2018-08-10").add(5, 'd');
         // const isDayBlocked = d => d.isSame(day, 'day'); 
         let prop = {
-            showClearDates:true
+            showClearDates: true
         }
         return (
             <div>
@@ -110,15 +111,17 @@ class Reservations2 extends Component {
                 </div>
 
                 <div style={{ display: "flex", justifyContent: "center" }}>
-                    <Button
-                        onClick={this.addSuiteToCart}
-                        color="primary"
-                        variant="contained"
-                        size="small"
-                        style={{ marginTop: "-20px", textDecoration: "none" }}
-                    >
-                        Book Dates
-                    </Button>
+                    <Link to="/cart">
+                        <Button
+                            onClick={this.addSuiteToCart}
+                            color="primary"
+                            variant="contained"
+                            size="small"
+                            style={{ marginTop: "-20px", textDecoration: "none" }}
+                        >
+                            Book Dates
+                        </Button>
+                    </Link>
                 </div>
 
                 <div style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
@@ -143,7 +146,7 @@ class Reservations2 extends Component {
                     />
                 </div>
 
-                <AlertDialog 
+                <AlertDialog
                     open={this.state.open}
                     handleClose={this.handleClose}
                     message="Please select dates"

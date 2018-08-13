@@ -2,14 +2,16 @@ import React, { Component } from "react";
 import axios from "axios";
 import moment from "moment";
 import { connect } from "react-redux";
+import { Card, CardContent, CardHeader, CardMedia, Typography, Button } from "@material-ui/core";
+
 import { refreshCart, deleteItemFromCart } from "../../ducks/reducer";
 
 class Cart extends Component {
     // componentDidUpdate(prevProps) {
     //     if (this.props.cart !== prevProps.cart) {
     //      console.log("componentdidupdate",this.props.cart);
-         
-         
+
+
     //     }
     //   }      
 
@@ -26,32 +28,77 @@ class Cart extends Component {
         })
     }
 
-    render() {
-        console.log(this.props);
-        let { deleteItemFromCart } = this.props
+    getTotal() {
+        return (this.props.cart.map(item => item.total).reduce((acc, curr) => acc + curr));
+    }
 
+    render() {
+        let { deleteItemFromCart } = this.props
         let mappedCart = this.props.cart.map((item, i) => {
             return (
+                // <div key={i}>
+                //     <button onClick={() => deleteItemFromCart(item.id)}>X</button>
+                //     <h1>{item.title}</h1>
+                //     <img src={item.img} alt={item.title} />
+                //     <p>Total: ${item.total}</p>
+                // </div>
                 <div key={i}>
-                    <button onClick={() => deleteItemFromCart(item.id)}>X</button>
-                    <h1>{item.title}</h1>
-                    <img src={item.img} alt={item.title} />
-                    <p>Total: ${item.total}</p>
+                    <Card style={{ maxWidth: 400, borderRadius: 0 }}>
+                        <CardHeader
+                            title={item.title}
+                            subheader={`${moment(item.startDate).format("MM/DD/YYYY")}-${moment(item.endDate).format("MM/DD/YYYY")}`}
+                        />
+                        <CardMedia
+                            style={{ height: 0, paddingTop: '56.25%' }}
+                            image={item.img}
+                            title={item.title}
+                        />
+                        <CardContent>
+                            <Typography>
+                                Price: ${item.total}
+                            </Typography>
+                        </CardContent>
+                    </Card>
                 </div>
             );
         });
 
         return (
-            <div>
-                {this.props.cart.length === 0 ?
-                    null
-                    :
+            this.props.cart.length === 0 ?
+                <div>
+                    <Card style={{ maxWidth: 400, borderRadius: 0 }}>
+                        <CardHeader
+                            title="Your Shopping Cart is empty."
+                        />
+                    </Card>
+                </div>
+                :
+                <div>
+                    <Card style={{ maxWidth: 400, borderRadius: 0 }}>
+                        <CardHeader
+                            title="Shopping Cart"
+                        />
+                    </Card>
                     <div>
                         {mappedCart}
-                        <button onClick={() => this.handleCheckout()}>Checkout</button>
                     </div>
-                }
-            </div>
+                    <Card style={{ maxWidth: 400, borderRadius: 0 }}>
+                        <CardHeader
+                            title="Total:"
+                            subheader={`$${this.getTotal()}`}
+                        />
+                    </Card>
+                    <div style={{ display: "flex", justifyContent: "center" }}>
+                        <Button
+                            variant="raised"
+                            color="primary"
+                            small
+                            style={{ marginTop: "-20px", textDecoration: "none" }}
+                            onClick={() => this.handleCheckout()}>Checkout
+                        </Button>
+                    </div>
+                </div>
+
         );
     }
 }

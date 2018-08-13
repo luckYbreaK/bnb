@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import CarouselSlider from "react-carousel-slider";
@@ -14,9 +15,12 @@ import {
 } from "@material-ui/core";
 
 import Modal from "../Modal/Modal";
-import { updateSelectedSuite } from "../../ducks/reducer";
+import { updateSelectedSuite, updateSuites } from "../../ducks/reducer";
 import SuiteModal from "../Modal/SuiteModal";
 import "../Modal/SuiteModal.css";
+// Imports a local file with the images
+const context = require.context("../../img/card", true, /\.(jpg)$/);
+const regex = /\b[A-Za-z]+/;
 
 class Suites extends Component {
     constructor() {
@@ -28,6 +32,25 @@ class Suites extends Component {
 
         this.handleClose = this.handleClose.bind(this);
         this.handleOpen = this.handleOpen.bind(this);
+    }
+
+    componentDidMount() {
+        let { updateSuites } = this.props;
+        axios.get("/api/suites").then(res => {
+            let addImgToSuites = res.data.map(suite => {
+                let updatedSuite = {};
+
+                context.keys().forEach(key => {
+                    if (suite.title.includes(key.match(regex)[0])) {
+                        updatedSuite = Object.assign({}, suite, { img: context(key) });
+                    }
+                });
+
+                return updatedSuite;
+            })
+
+            updateSuites(addImgToSuites);
+        });
     }
 
     handleOpen(suite) {
@@ -131,6 +154,7 @@ class Suites extends Component {
         }
 
         return (
+            this.props.suites ?
             <div>
 
                 <CarouselSlider
@@ -161,6 +185,8 @@ class Suites extends Component {
                     <p>{selectedSuite.description}</p>
                 </Modal> */}
             </div>
+            :
+            ""
         );
     }
 }
@@ -172,4 +198,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { updateSelectedSuite })(Suites);
+export default connect(mapStateToProps, { updateSelectedSuite, updateSuites })(Suites);
