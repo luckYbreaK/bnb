@@ -2,89 +2,154 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import CarouselSlider from "react-carousel-slider";
+import {
+    Button,
+    Typography,
+    IconButton,
+    Card,
+    CardMedia,
+    CardContent,
+    CardActions,
+    CardHeader
+} from "@material-ui/core";
 
 import Modal from "../Modal/Modal";
 import { updateSelectedSuite } from "../../ducks/reducer";
+import SuiteModal from "../Modal/SuiteModal";
+import "../Modal/SuiteModal.css";
 
 class Suites extends Component {
     constructor() {
         super();
 
         this.state = {
-            // selectedSuite: {},
-            isOpen: false
+            open: false,
         }
 
-        this.togleModal = this.togleModal.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+        this.handleOpen = this.handleOpen.bind(this);
     }
 
-    togleModal(openOrClose, suite) {
-        let { updateSelectedSuite } = this.props;
-        if (openOrClose === "open") {
-            updateSelectedSuite(suite)
-            this.setState({
-                // selectedSuite: suite,
-                isOpen: !this.state.isOpen
-            });
-        } else if (openOrClose === "close") {
-            updateSelectedSuite(suite);
-            this.setState({
-                // selectedSuite: suite,
-                isOpen: !this.state.isOpen
-            });
-        }
+    handleOpen(suite) {
+        this.props.updateSelectedSuite(suite);
+        this.setState({ open: true });
+    };
 
-    }
+    handleClose(suite) {
+        this.props.updateSelectedSuite(suite);
+        this.setState({ open: false });
+    };
+
+    // constructor() {
+    //     super();
+
+    //     this.state = {
+    //         // selectedSuite: {},
+    //         isOpen: false
+    //     }
+
+    //     this.togleModal = this.togleModal.bind(this);
+    // }
+
+    // togleModal(openOrClose, suite) {
+    //     let { updateSelectedSuite } = this.props;
+    //     if (openOrClose === "open") {
+    //         updateSelectedSuite(suite)
+    //         this.setState({
+    //             // selectedSuite: suite,
+    //             isOpen: !this.state.isOpen
+    //         });
+    //     } else if (openOrClose === "close") {
+    //         updateSelectedSuite(suite);
+    //         this.setState({
+    //             // selectedSuite: suite,
+    //             isOpen: !this.state.isOpen
+    //         });
+    //     }
+
+    // }
 
     render() {
-        console.log(this.props.selectedSuite);
-
         let { suites, selectedSuite } = this.props;
 
         let mappedSuites = suites.map((suite, i) =>
-            // return (
-            //     {
-            //         des: suite.title,
-            //         imgSrc: suite.img
-            //     }
-            // );
-
+            // <div key={i}>
+            //     <img src={suite.img} alt="" />
+            //     <p>{suite.title}</p>
+            //     <button onClick={() => this.togleModal("open", suite)}>
+            //         View Description
+            //     </button>
+            // </div>
             <div key={i}>
-                <img src={suite.img} alt="" />
-                <p>{suite.title}</p>
-                <button onClick={() => this.togleModal("open", suite)}>
-                    View Description
-                </button>
-            </div>
+                <Card style={{ maxWidth: 400, borderRadius: 0 }}>
 
+                    <CardHeader
+                        title={suite.title}
+                    />
+                    <img src={suite.img} alt="" />
+                    <CardActions style={{ justifyContent: "center" }}>
+                            <div style={{ backgroundColor: 'rgb(117, 117, 117)', width: "100%", display: "flex", justifyContent: "center", margin: "-70px 20px 0 20px", opacity: "0.6", borderRadius: "5px"}}>
+                                {/* <IconButton color="primary" style={{ opacity: "1" }} onClick={this.handleOpen}>
+                                        <Info />
+                                    </IconButton> */}
+                                <Button
+                                    style={{color: "white"}}
+                                    onClick={() => this.handleOpen(suite)}
+                                >
+                                    View Details
+                                </Button>
+                            </div>
+                        </CardActions>
+                </Card>
+            </div>
         );
 
         let manner = {
             circular: false
         };
+        let accEle = {
+            flag: true
+        }
+        let dotsSetting = {
+            placeOn: "beneath"
+        }
+
+        let buttonSetting = {
+            placeOn: "bottom-beneath",
+            // hoverEvent: true
+        }
 
         let sliderBoxStyle = {
-            height: "400px",
-            width: "320px",
+            height: "100%",
+            width: "100%",
             background: "transparent"
         };
 
-        let buttonSetting = {
-            placeOn: "middle-outside"
-            // hoverEvent: true
+        let itemStyle = {
+            height: "100%",
+            background: "transparent"
         }
 
         return (
             <div>
-                <Link to="/reservations"><button>Reserve Suite</button></Link>
+
                 <CarouselSlider
                     // slideItems={mappedSuites}
                     slideCpnts={mappedSuites}
                     manner={manner}
-                    sliderBoxStyle={sliderBoxStyle}
+                    // accEle={accEle}
+                    dotsSetting={dotsSetting}
                     buttonSetting={buttonSetting}
+                    sliderBoxStyle={sliderBoxStyle}
+                    itemStyle={itemStyle}
                 />
-                <Modal
+                <SuiteModal
+                    handleClose={this.handleClose}
+                    open={this.state.open}
+                    selectedSuite={this.props.selectedSuite}
+                    style={{zIndex: "3000 !important"}}
+                />
+                {/* <Modal
                     show={this.state.isOpen}
                     onClose={() => this.togleModal("close", {})}
                 >
@@ -94,7 +159,7 @@ class Suites extends Component {
                     <p>${selectedSuite.weekday_price}</p>
                     <p>${selectedSuite.weekend_price}</p>
                     <p>{selectedSuite.description}</p>
-                </Modal>
+                </Modal> */}
             </div>
         );
     }

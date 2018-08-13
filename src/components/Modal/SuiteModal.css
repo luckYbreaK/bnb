@@ -1,0 +1,15 @@
+.rcs_buttonSet {	
+	z-index: 2;
+}
+
+.rcs_buttonSet .rcs_buttonWrapper {
+	z-index: 2;
+}
+
+.rcs_buttonWrapper {
+	z-index: 2;
+}
+
+SuiteModal {
+    z-index: 3000 !important;
+}
