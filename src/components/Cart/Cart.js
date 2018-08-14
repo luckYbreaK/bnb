@@ -27,6 +27,7 @@ class Cart extends Component {
         this.handleCheckout = this.handleCheckout.bind(this);
         this.handleClickOpen = this.handleClickOpen.bind(this);
         this.handleClose = this.handleClose.bind(this);
+        this.deleteItemFromCart = this.deleteItemFromCart.bind(this);
     }
 
     componentDidMount() {
@@ -66,6 +67,14 @@ class Cart extends Component {
         });
     }
 
+    deleteItemFromCart(id) {
+        axios.delete(`/api/deleteFromCart/${id}`).then(res => {
+            this.setState({
+                cart: [...res.data]
+            });
+        });
+    }
+
     render() {
         // let { deleteItemFromCart } = this.props
         let mappedCart = this.state.cart.map((item, i) => {
@@ -86,7 +95,7 @@ class Cart extends Component {
                                 Price: ${item.total}
                                 <IconButton
                                     style={{ marginTop: "-16px" }}
-                                    onClick={() => deleteItemFromCart(item.id)}
+                                    onClick={() => this.deleteItemFromCart(item.id)}
                                 >
                                     <DeleteIcon />
                                 </IconButton>

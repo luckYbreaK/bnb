@@ -66,7 +66,6 @@ class Nav2 extends Component {
     }
 
     render() {
-        console.log(this.props.loggedIn);
         return (
             <div>
 

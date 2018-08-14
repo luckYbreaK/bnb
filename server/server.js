@@ -4,6 +4,7 @@ const express = require("express"),
     massive = require("massive"),
     session = require("express-session"),
     cors = require("cors"),
+    _ = require("lodash"),
     suitesCtrl = require("./controllers/suites"),
     auth0Ctrl = require("./controllers/auth0"),
     stripeCtrl = require("./controllers/stripe"),
@@ -44,10 +45,10 @@ app.get("/api/getCart", (req, res) => {
 // Update later to add to db
 // app.post("/api/cart", (req, res) => {
 //     console.log("req.body",req.body.suite);
-    
+
 //     req.session.user.cart.push(req.body.suite)
 //     console.log("req.session", req.session.user.cart);
-    
+
 //     res.status(200).send(req.session.user.cart);
 // })
 app.post('/api/payment', stripeCtrl.charge);
@@ -56,6 +57,13 @@ app.post("/api/addToCart", (req, res) => {
     req.session.user.cart.push(req.body.suite)
     res.status(200).send(req.session.user.cart);
 })
+app.delete("/api/deleteFromCart/:id", (req, res) => {
+    let index = _.findIndex(req.session.user.cart, ['id', Number(req.params.id)])
+    if (index !== -1) {
+        req.session.user.cart.splice(index, 1);
+    }
+    res.status(200).send(req.session.user.cart);
+});
 
 massive(CONNECTION_STRING).then(db => {
     app.set("db", db);
