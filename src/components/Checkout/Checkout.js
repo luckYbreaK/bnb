@@ -1,10 +1,6 @@
 import React, { Component } from "react";
 import StripeCheckout from "react-stripe-checkout";
 import axios from "axios";
-import { connect } from "react-redux";
-import { resetCart } from "../../ducks/reducer";
-
-
 
 
 class Checkout extends Component {
@@ -57,10 +53,4 @@ class Checkout extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        cart: state.cart
-    }
-}
-
-export default connect(mapStateToProps, { resetCart })(Checkout);
+export default Checkout;

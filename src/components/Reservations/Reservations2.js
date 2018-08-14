@@ -1,24 +1,17 @@
 import React, { Component } from 'react';
 import { DateRangePicker } from 'react-dates';
-import { Link } from 'react-router-dom';
 import { connect } from "react-redux";
 import moment from 'moment';
-import PropTypes from 'prop-types';
 import axios from "axios";
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 import {
     Button,
-    Typography,
-    IconButton,
     Card,
     CardMedia,
-    CardContent,
-    CardActions,
     CardHeader
 } from "@material-ui/core";
 
-import Cart from "../Cart/Cart";
 import AlertDialog from "../AlertDialog/AlertDialog";
 import { updateCart } from "../../ducks/reducer";
 
@@ -90,15 +83,9 @@ class Reservations2 extends Component {
         const isDayBlocked = day => RESERVATIONS.filter(moment => moment.isSame(day, 'day')).length > 0;
         // let day = moment("2018-08-10").add(5, 'd');
         // const isDayBlocked = d => d.isSame(day, 'day'); 
-        let prop = {
-            showClearDates: true
-        }
         return (
             <div>
-                {/* <div>
-          <h3>Selected Suite:</h3>
-          <img src={this.props.selectedSuite.img} alt={this.props.selectedSuite.title} />
-        </div> */}
+
                 <div>
                     <Card style={{ maxWidth: 400, borderRadius: 0 }}>
                         <CardHeader

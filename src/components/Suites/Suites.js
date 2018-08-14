@@ -1,20 +1,14 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
 import CarouselSlider from "react-carousel-slider";
 import {
     Button,
-    Typography,
-    IconButton,
     Card,
-    CardMedia,
-    CardContent,
     CardActions,
     CardHeader
 } from "@material-ui/core";
 
-import Modal from "../Modal/Modal";
 import { updateSelectedSuite, updateSuites } from "../../ducks/reducer";
 import SuiteModal from "../Modal/SuiteModal";
 import "../Modal/SuiteModal.css";
@@ -63,46 +57,10 @@ class Suites extends Component {
         this.setState({ open: false });
     };
 
-    // constructor() {
-    //     super();
-
-    //     this.state = {
-    //         // selectedSuite: {},
-    //         isOpen: false
-    //     }
-
-    //     this.togleModal = this.togleModal.bind(this);
-    // }
-
-    // togleModal(openOrClose, suite) {
-    //     let { updateSelectedSuite } = this.props;
-    //     if (openOrClose === "open") {
-    //         updateSelectedSuite(suite)
-    //         this.setState({
-    //             // selectedSuite: suite,
-    //             isOpen: !this.state.isOpen
-    //         });
-    //     } else if (openOrClose === "close") {
-    //         updateSelectedSuite(suite);
-    //         this.setState({
-    //             // selectedSuite: suite,
-    //             isOpen: !this.state.isOpen
-    //         });
-    //     }
-
-    // }
-
     render() {
-        let { suites, selectedSuite } = this.props;
+        let { suites } = this.props;
 
         let mappedSuites = suites.map((suite, i) =>
-            // <div key={i}>
-            //     <img src={suite.img} alt="" />
-            //     <p>{suite.title}</p>
-            //     <button onClick={() => this.togleModal("open", suite)}>
-            //         View Description
-            //     </button>
-            // </div>
             <div key={i}>
                 <Card style={{ maxWidth: 400, borderRadius: 0 }}>
 
@@ -130,9 +88,6 @@ class Suites extends Component {
         let manner = {
             circular: false
         };
-        let accEle = {
-            flag: true
-        }
         let dotsSetting = {
             placeOn: "beneath"
         }

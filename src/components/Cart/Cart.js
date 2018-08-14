@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
 import moment from "moment";
-import { connect } from "react-redux";
 import {
     Card,
     CardContent,
@@ -9,12 +8,11 @@ import {
     CardMedia,
     Typography,
     Button,
-    IconButton,
-    Icon
+    IconButton
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 
-import { refreshCart, deleteItemFromCart } from "../../ducks/reducer";
+import { deleteItemFromCart } from "../../ducks/reducer";
 import AlertDialog from "../AlertDialog/AlertDialog"
 
 class Cart extends Component {
@@ -29,7 +27,6 @@ class Cart extends Component {
         this.handleCheckout = this.handleCheckout.bind(this);
         this.handleClickOpen = this.handleClickOpen.bind(this);
         this.handleClose = this.handleClose.bind(this);
-        
     }
 
     componentDidMount() {
@@ -70,17 +67,9 @@ class Cart extends Component {
     }
 
     render() {
-        console.log(this.state.cart);
-        
-        let { deleteItemFromCart } = this.props
+        // let { deleteItemFromCart } = this.props
         let mappedCart = this.state.cart.map((item, i) => {
             return (
-                // <div key={i}>
-                //     <button onClick={() => deleteItemFromCart(item.id)}>X</button>
-                //     <h1>{item.title}</h1>
-                //     <img src={item.img} alt={item.title} />
-                //     <p>Total: ${item.total}</p>
-                // </div>
                 <div key={i}>
                     <Card style={{ maxWidth: 400, borderRadius: 0 }}>
                         <CardHeader
@@ -149,15 +138,8 @@ class Cart extends Component {
                         message="Please Log In"
                     />
                 </div>
-
         );
     }
 }
 
-function mapStateToProps(state) {
-    return {
-        cart: state.cart
-    }
-}
-
-export default connect(mapStateToProps, { refreshCart, deleteItemFromCart })(Cart);
+export default Cart;

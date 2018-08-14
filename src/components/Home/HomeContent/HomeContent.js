@@ -3,14 +3,12 @@ import { connect } from "react-redux";
 import {
     Button,
     Typography,
-    IconButton,
     Card,
     CardMedia,
     CardContent,
     CardActions,
     CardHeader
 } from "@material-ui/core";
-import { Info } from '@material-ui/icons';
 
 import { updateSelectedSuite } from "../../../ducks/reducer";
 import SuiteModal from "../../Modal/SuiteModal";
@@ -57,9 +55,6 @@ class HomeContent extends Component {
                         />
                         <CardActions style={{ justifyContent: "center" }}>
                             <div style={{ backgroundColor: 'rgb(117, 117, 117)', width: "100%", display: "flex", justifyContent: "center", margin: "-70px 20px 0 20px", opacity: "0.6", borderRadius: "5px"}}>
-                                {/* <IconButton color="primary" style={{ opacity: "1" }} onClick={this.handleOpen}>
-                                        <Info />
-                                    </IconButton> */}
                                 <Button
                                     style={{color: "white"}}
                                     onClick={() => this.handleOpen(suite)}

@@ -3,11 +3,13 @@ import _ from "lodash";
 const initialState = {
     //array of objects
     suites: [],
+    loggedIn: false,
     cart: [],
     selectedSuite: {}
 }
 
 const UPDATE_SUITES = "UPDATE_SUITES";
+const UPDATE_LOGGED_IN = "UPDATE_LOGGED_IN"
 const UPDATE_CART = "UPDATE_CART";
 const DELETE_ITEM_FROM_CART = "DELETE_ITEM_FROM_CART";
 const REFRESH_CART = "REFRESH_CART";
@@ -19,6 +21,13 @@ export function updateSuites(suites) {
     return {
         type: UPDATE_SUITES,
         payload: suites
+    }
+}
+
+export function updateLoggedIn(status) {
+    return {
+        type: UPDATE_LOGGED_IN,
+        payload: status
     }
 }
 
@@ -67,6 +76,8 @@ export default function reducer(state = initialState, action) {
     switch (action.type) {
         case UPDATE_SUITES:
             return Object.assign({}, state, {suites: action.payload});
+        case UPDATE_LOGGED_IN:
+            return Object.assign({}, state, {loggedIn: action.payload});
         case UPDATE_CART:
             return Object.assign({}, state, {cart: [...state.cart, action.payload]});
         case REFRESH_CART:

@@ -18,7 +18,7 @@ import {
 import { Menu, Hotel, ShoppingCart } from '@material-ui/icons';
 
 import "./Nav2.css";
-
+import { updateLoggedIn } from "../../ducks/reducer";
 
 class Nav2 extends Component {
     constructor() {
@@ -33,6 +33,15 @@ class Nav2 extends Component {
         this.logout = this.logout.bind(this);
     }
 
+    componentDidUpdate() {
+        axios.get("/api/userData").then(res => {
+            let { data } = res;
+            if (data.email) {
+                this.props.updateLoggedIn(true);
+            }
+        });
+    }
+
     toggleDrawer() {
         this.setState({
             drawerOpen: !this.state.drawerOpen
@@ -40,8 +49,8 @@ class Nav2 extends Component {
     }
 
     login() {
-        let { history, cart } = this.props;
-        axios.post("/api/login", {pathname: history.location.pathname, cart}).then(res => {
+        let { history } = this.props;
+        axios.post("/api/login", { pathname: history.location.pathname }).then(res => {
 
             let { REACT_APP_AUTH0_DOMAIN, REACT_APP_AUTH0_CLIENT_ID } = process.env;
             let url = `${encodeURIComponent(window.location.origin)}/auth/callback`
@@ -51,11 +60,13 @@ class Nav2 extends Component {
     }
 
     logout() {
-        this.props.resetCart();
-        console.log("logged out!");
+        axios.get('/api/logout').then(res => {
+            this.props.updateLoggedIn(false);
+        });
     }
 
     render() {
+        console.log(this.props.loggedIn);
         return (
             <div>
 
@@ -106,9 +117,9 @@ class Nav2 extends Component {
                                         </Link>
                                         <ListItem button>
                                             <ListItemText
-                                                primary="Log In / Sign Up"
+                                                primary={this.props.loggedIn ? "Log Out" : "Log In / Sign Up"}
                                                 inset
-                                                onClick={this.login}
+                                                onClick={this.props.loggedIn ? this.logout : this.login}
                                             />
                                         </ListItem>
                                     </List>
@@ -126,8 +137,8 @@ class Nav2 extends Component {
 
 function mapStateToProps(state) {
     return {
-        cart: state.cart
+        loggedIn: state.loggedIn
     }
 }
 
-export default withRouter(connect(mapStateToProps)(Nav2));
+export default withRouter(connect(mapStateToProps, { updateLoggedIn })(Nav2));

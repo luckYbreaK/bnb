@@ -26,9 +26,8 @@ module.exports = {
     },
 
     loginUser: (req, res) => {
-        let {pathname, cart} = req.body;
+        let {pathname} = req.body;
         req.session.prevPath = pathname;
-        req.session.cart = cart;
         res.sendStatus(200);
     },
 
