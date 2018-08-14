@@ -2,35 +2,50 @@ import React, { Component } from "react";
 import axios from "axios";
 import moment from "moment";
 import { connect } from "react-redux";
-import { 
-    Card, 
-    CardContent, 
-    CardHeader, 
-    CardMedia, 
-    Typography, 
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    CardMedia,
+    Typography,
     Button,
     IconButton,
-    Icon 
+    Icon
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 
 import { refreshCart, deleteItemFromCart } from "../../ducks/reducer";
+import AlertDialog from "../AlertDialog/AlertDialog"
 
 class Cart extends Component {
-    // componentDidUpdate(prevProps) {
-    //     if (this.props.cart !== prevProps.cart) {
-    //      console.log("componentdidupdate",this.props.cart);
+    constructor() {
+        super();
 
+        this.state = {
+            open: false,
+            cart: []
+        }
 
-    //     }
-    //   }      
+        this.handleCheckout = this.handleCheckout.bind(this);
+        this.handleClickOpen = this.handleClickOpen.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+        
+    }
+
+    componentDidMount() {
+        axios.get("/api/getCart").then(res => {
+            this.setState({
+                cart: [...this.state.cart, ...res.data]
+            });
+        });
+    }
 
     handleCheckout() {
         axios.get("/api/userData").then(res => {
             let email = null;
             let { data } = res;
-            if (typeof data === "string") {
-                alert(data)
+            if (!data.email) {
+                this.handleClickOpen();
             } else {
                 email = data.email;
                 window.location = "http://localhost:3000/#/checkout";
@@ -39,12 +54,26 @@ class Cart extends Component {
     }
 
     getTotal() {
-        return (this.props.cart.map(item => item.total).reduce((acc, curr) => acc + curr));
+        return (this.state.cart.map(item => item.total).reduce((acc, curr) => acc + curr));
+    }
+
+    handleClickOpen() {
+        this.setState({
+            open: true
+        });
+    }
+
+    handleClose() {
+        this.setState({
+            open: false
+        });
     }
 
     render() {
+        console.log(this.state.cart);
+        
         let { deleteItemFromCart } = this.props
-        let mappedCart = this.props.cart.map((item, i) => {
+        let mappedCart = this.state.cart.map((item, i) => {
             return (
                 // <div key={i}>
                 //     <button onClick={() => deleteItemFromCart(item.id)}>X</button>
@@ -64,10 +93,10 @@ class Cart extends Component {
                             title={item.title}
                         />
                         <CardContent>
-                            <Typography style={{display: "flex", justifyContent: "space-between"}}>
+                            <Typography style={{ display: "flex", justifyContent: "space-between" }}>
                                 Price: ${item.total}
-                                <IconButton 
-                                    style={{marginTop: "-16px"}} 
+                                <IconButton
+                                    style={{ marginTop: "-16px" }}
                                     onClick={() => deleteItemFromCart(item.id)}
                                 >
                                     <DeleteIcon />
@@ -80,7 +109,7 @@ class Cart extends Component {
         });
 
         return (
-            this.props.cart.length === 0 ?
+            this.state.cart.length === 0 ?
                 <div>
                     <Card style={{ maxWidth: 400, borderRadius: 0 }}>
                         <CardHeader
@@ -108,11 +137,17 @@ class Cart extends Component {
                         <Button
                             variant="raised"
                             color="primary"
-                            small
+                            size="small"
                             style={{ marginTop: "-20px", textDecoration: "none" }}
                             onClick={() => this.handleCheckout()}>Checkout
                         </Button>
                     </div>
+
+                    <AlertDialog
+                        open={this.state.open}
+                        handleClose={this.handleClose}
+                        message="Please Log In"
+                    />
                 </div>
 
         );

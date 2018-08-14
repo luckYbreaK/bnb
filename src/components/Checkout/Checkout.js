@@ -8,8 +8,24 @@ import { resetCart } from "../../ducks/reducer";
 
 
 class Checkout extends Component {
+    constructor() {
+        super();
+
+        this.state = {
+            cart: []
+        }
+    }
+
+    componentDidMount() {
+        axios.get("/api/getCart").then(res => {
+            this.setState({
+                cart: [...this.state.cart, ...res.data]
+            });
+        });
+    }
+
     getTotal() {
-        return (this.props.cart.map(item => item.total).reduce((acc, curr) => acc + curr) * 100);
+        return (this.state.cart.map(item => item.total).reduce((acc, curr) => acc + curr) * 100);
     }
 
     onToken = (token) => {
@@ -23,17 +39,20 @@ class Checkout extends Component {
     }
 
     render() {
-        console.log(this.props)
 
         let { REACT_APP_PUB_KEY } = process.env;
+        let total = this.state.cart.length !== 0 ? this.getTotal() : null
         return (
+            total ?
             <div>
                 <StripeCheckout
                     token={this.onToken}
                     stripeKey={REACT_APP_PUB_KEY}
-                    amount={this.getTotal()}
+                    amount={total}
                 />
             </div>
+            :
+            null
         );
     }
 }

@@ -22,24 +22,25 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }));
-// app.use((req, res, next) => {
-//     if (req.session.user) {
-//         next();
-//     } else {
-//         req.session.user = {
-//             cart: []
-//         }
-//         console.log(req.session.user);
-
-//         next();
-//     }
-// });
+app.use((req, res, next) => {
+    if (req.session.user) {
+        next();
+    } else {
+        req.session.user = {
+            cart: []
+        }
+        next();
+    }
+});
 
 // ENDPOINTS
 app.get("/api/userData", usersCtrl.readUserData);
 app.get("/api/suites", suitesCtrl.readSuites);
-app.get('/auth/callback', auth0Ctrl.loginUser);
+app.get('/auth/callback', auth0Ctrl.auth0);
 app.get('/api/logout', auth0Ctrl.logoutUser);
+app.get("/api/getCart", (req, res) => {
+    res.status(200).send(req.session.user.cart);
+})
 // Update later to add to db
 // app.post("/api/cart", (req, res) => {
 //     console.log("req.body",req.body.suite);
@@ -50,6 +51,11 @@ app.get('/api/logout', auth0Ctrl.logoutUser);
 //     res.status(200).send(req.session.user.cart);
 // })
 app.post('/api/payment', stripeCtrl.charge);
+app.post("/api/login", auth0Ctrl.loginUser);
+app.post("/api/addToCart", (req, res) => {
+    req.session.user.cart.push(req.body.suite)
+    res.status(200).send(req.session.user.cart);
+})
 
 massive(CONNECTION_STRING).then(db => {
     app.set("db", db);

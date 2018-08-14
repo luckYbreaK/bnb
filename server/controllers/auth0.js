@@ -3,7 +3,7 @@ const axios = require("axios");
 const { REACT_APP_AUTH0_CLIENT_ID, AUTH0_CLIENT_SECRET, REACT_APP_AUTH0_DOMAIN } = process.env;
 
 module.exports = {
-    loginUser: async (req, res) => {
+    auth0: async (req, res) => {
         
         let payload = {
             client_id: REACT_APP_AUTH0_CLIENT_ID,
@@ -20,7 +20,16 @@ module.exports = {
         let responseWithUserData = await axios.get(`https://${REACT_APP_AUTH0_DOMAIN}/userinfo/?access_token=${responseWithToken.data.access_token}`);
     
         req.session.user = Object.assign({}, req.session.user, responseWithUserData.data);
-        res.redirect('/');
+        let cart = req.session.cart;
+        let pathname = `/#${req.session.prevPath}`;
+        res.redirect(pathname);
+    },
+
+    loginUser: (req, res) => {
+        let {pathname, cart} = req.body;
+        req.session.prevPath = pathname;
+        req.session.cart = cart;
+        res.sendStatus(200);
     },
 
     logoutUser: (req, res) => {

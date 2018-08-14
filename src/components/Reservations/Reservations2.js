@@ -62,7 +62,11 @@ class Reservations2 extends Component {
             addPropsToSelectedSuite.startDate = this.state.startDate;
             addPropsToSelectedSuite.endDate = this.state.endDate;
             addPropsToSelectedSuite.total = this.calcTotal(this.state.startDate, this.state.endDate, this.props.selectedSuite);
-            this.props.updateCart(addPropsToSelectedSuite)
+            // this.props.updateCart(addPropsToSelectedSuite)
+            axios.post("/api/addToCart", {suite: addPropsToSelectedSuite}).then(res => {
+                this.props.history.push("/cart");
+            });
+            
         } else {
             // alert("Please select dates");
             this.handleClickOpen();
@@ -82,7 +86,6 @@ class Reservations2 extends Component {
     }
 
     render() {
-
         const RESERVATIONS = [moment(), moment().add(10, 'days')];
         const isDayBlocked = day => RESERVATIONS.filter(moment => moment.isSame(day, 'day')).length > 0;
         // let day = moment("2018-08-10").add(5, 'd');
@@ -111,7 +114,7 @@ class Reservations2 extends Component {
                 </div>
 
                 <div style={{ display: "flex", justifyContent: "center" }}>
-                    <Link to="/cart" style={{ textDecoration: "none" }}>
+                    {/* <Link to="/cart" style={{ textDecoration: "none" }}> */}
                         <Button
                             onClick={this.addSuiteToCart}
                             color="primary"
@@ -121,7 +124,7 @@ class Reservations2 extends Component {
                         >
                             Book Dates
                         </Button>
-                    </Link>
+                    {/* </Link> */}
                 </div>
 
                 <div style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
@@ -149,7 +152,7 @@ class Reservations2 extends Component {
                 <AlertDialog
                     open={this.state.open}
                     handleClose={this.handleClose}
-                    message="Please select dates"
+                    message="Please Select Dates"
                 />
 
             </div>
