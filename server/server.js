@@ -64,6 +64,10 @@ app.delete("/api/deleteFromCart/:id", (req, res) => {
     }
     res.status(200).send(req.session.user.cart);
 });
+app.delete("/api/emptyCart", (req, res) => {
+    req.session.user.cart = [];
+    res.status(200).send(req.session.user.cart);
+})
 
 massive(CONNECTION_STRING).then(db => {
     app.set("db", db);

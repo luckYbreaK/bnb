@@ -1,6 +1,15 @@
 import React, { Component } from "react";
 import StripeCheckout from "react-stripe-checkout";
 import axios from "axios";
+import {
+    Card,
+    CardContent,
+    CardHeader,
+    CardMedia,
+    Typography,
+    Button,
+    IconButton
+} from "@material-ui/core";
 
 
 class Checkout extends Component {
@@ -8,7 +17,8 @@ class Checkout extends Component {
         super();
 
         this.state = {
-            cart: []
+            cart: [],
+            transactionComplete: false
         }
     }
 
@@ -27,11 +37,14 @@ class Checkout extends Component {
     onToken = (token) => {
         token.card = void 0;
         console.log('token', token);
-        axios.post('/api/payment', { token, amount: this.getTotal() }).then(response => {
-            alert('we are in business')
+        axios.post('/api/payment', { token, amount: this.getTotal() }).then(res => {
+            axios.delete("/api/emptyCart").then(res => {
+                this.setState({
+                    cart: res.data,
+                    transactionComplete: true
+                });
+            });
         });
-        // this.props.resetCart();
-        this.props.history.push("/");
     }
 
     render() {
@@ -40,15 +53,32 @@ class Checkout extends Component {
         let total = this.state.cart.length !== 0 ? this.getTotal() : null
         return (
             total ?
-            <div>
-                <StripeCheckout
-                    token={this.onToken}
-                    stripeKey={REACT_APP_PUB_KEY}
-                    amount={total}
-                />
-            </div>
-            :
-            null
+                <div>
+                    <Card style={{ maxWidth: 400, borderRadius: 0 }}>
+                        <CardHeader
+                            title="Checkout"
+                        />
+                        <CardMedia
+                            style={{ height: 0, paddingTop: '56.25%' }}
+                            image="/img.1/castlecreekExterior/buildingFront.jpeg"
+                            title="Castle Creek Inn"
+                        />
+                    </Card>
+                    <div style={{display: "flex", justifyContent: "center"}}>
+                        <StripeCheckout
+                            token={this.onToken}
+                            stripeKey={REACT_APP_PUB_KEY}
+                            amount={total}
+                        />
+                    </div>
+                </div>
+                :
+                <Card style={{ maxWidth: 400, borderRadius: 0 }}>
+                    <CardHeader
+                        title="Thank you for your reservation."
+                        subheader="We look forward to seeing you!"
+                    />
+                </Card>
         );
     }
 }

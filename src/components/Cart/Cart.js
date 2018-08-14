@@ -12,7 +12,6 @@ import {
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 
-import { deleteItemFromCart } from "../../ducks/reducer";
 import AlertDialog from "../AlertDialog/AlertDialog"
 
 class Cart extends Component {
