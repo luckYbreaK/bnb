@@ -13,7 +13,6 @@ const express = require("express"),
 
 app = express();
 
-
 const { SERVER_PORT, CONNECTION_STRING, SESSION_SECRET } = process.env;
 
 // MIDDLEWARE

@@ -1,4 +1,4 @@
 INSERT INTO users
-(username, password, email, permission_type)
+(username, email, first_name, last_name)
 VALUES
 ($1, $2, $3, $4);
