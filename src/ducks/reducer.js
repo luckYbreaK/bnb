@@ -5,7 +5,8 @@ const initialState = {
     suites: [],
     loggedIn: false,
     cart: [],
-    selectedSuite: {}
+    selectedSuite: {},
+    suiteToEdit: {}
 }
 
 const UPDATE_SUITES = "UPDATE_SUITES";
@@ -15,6 +16,7 @@ const DELETE_ITEM_FROM_CART = "DELETE_ITEM_FROM_CART";
 const REFRESH_CART = "REFRESH_CART";
 const RESET_CART = "RESET_CART";
 const UPDATE_SELECTED_SUITE = "UPDATE_SELECTED_SUITE";
+const SELECT_SUITE_TO_EDIT = "SELECT_SUITE_TO_EDIT"
 // const UPDATE_IMAGES = "UPDATE_IMAGES";
 
 export function updateSuites(suites) {
@@ -65,6 +67,13 @@ export function updateSelectedSuite(suite) {
     }
 }
 
+export function selectSuiteToEdit(suite) {
+    return {
+        type: SELECT_SUITE_TO_EDIT,
+        payload: suite
+    }
+}
+
 // export function updateImages(images) {
 //     return {
 //         type: UPDATE_IMAGES,
@@ -75,24 +84,26 @@ export function updateSelectedSuite(suite) {
 export default function reducer(state = initialState, action) {
     switch (action.type) {
         case UPDATE_SUITES:
-            return Object.assign({}, state, {suites: action.payload});
+            return Object.assign({}, state, { suites: action.payload });
         case UPDATE_LOGGED_IN:
-            return Object.assign({}, state, {loggedIn: action.payload});
+            return Object.assign({}, state, { loggedIn: action.payload });
         case UPDATE_CART:
-            return Object.assign({}, state, {cart: [...state.cart, action.payload]});
+            return Object.assign({}, state, { cart: [...state.cart, action.payload] });
         case REFRESH_CART:
-            return Object.assign({}, state, {cart: action.payload})
+            return Object.assign({}, state, { cart: action.payload })
         case DELETE_ITEM_FROM_CART:
             let proxyCart = [...state.cart];
             let index = _.findIndex(proxyCart, ['id', action.payload])
-            if(index !== -1){
+            if (index !== -1) {
                 proxyCart.splice(index, 1);
-              }
-            return Object.assign({}, state, {cart: proxyCart}); 
+            }
+            return Object.assign({}, state, { cart: proxyCart });
         case RESET_CART:
-            return Object.assign({}, state, {cart: []});
+            return Object.assign({}, state, { cart: [] });
         case UPDATE_SELECTED_SUITE:
-            return Object.assign({}, state, {selectedSuite: action.payload});
+            return Object.assign({}, state, { selectedSuite: action.payload });
+        case SELECT_SUITE_TO_EDIT:
+            return Object.assign({}, state, { suiteToEdit: action.payload });
         // case UPDATE_IMAGES:}
         //     return Object.assign({}, state, {images: action.payload});
         default:

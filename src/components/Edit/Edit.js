@@ -25,7 +25,7 @@ class Reservations2 extends Component {
             open: false
         };
 
-        this.addSuiteToCart = this.addSuiteToCart.bind(this);
+        this.editSuiteInCart = this.editSuiteInCart.bind(this);
         this.calcTotal = this.calcTotal.bind(this);
         this.handleClickOpen = this.handleClickOpen.bind(this);
         this.handleClose = this.handleClose.bind(this);
@@ -48,14 +48,13 @@ class Reservations2 extends Component {
         return total;
     }
 
-    addSuiteToCart() {
+    editSuiteInCart() {
         if (this.state.startDate && this.state.endDate) {
-            let addPropsToSelectedSuite = this.props.selectedSuite;
-            addPropsToSelectedSuite.startDate = this.state.startDate;
-            addPropsToSelectedSuite.endDate = this.state.endDate;
-            addPropsToSelectedSuite.total = this.calcTotal(this.state.startDate, this.state.endDate, this.props.selectedSuite);
-            // this.props.updateCart(addPropsToSelectedSuite)
-            axios.post("/api/addToCart", {suite: addPropsToSelectedSuite}).then(res => {
+            let editsToSuite = this.props.suiteToEdit;
+            editsToSuite.startDate = this.state.startDate;
+            editsToSuite.endDate = this.state.endDate;
+            editsToSuite.total = this.calcTotal(this.state.startDate, this.state.endDate, this.props.suiteToEdit);
+            axios.put(`/api/updateItemInCart/${editsToSuite.id}`, {suite: editsToSuite}).then(res => {
                 this.props.history.push("/cart");
             });
             
@@ -87,26 +86,29 @@ class Reservations2 extends Component {
                 <div>
                     <Card style={{ maxWidth: 400, borderRadius: 0 }}>
                         <CardHeader
-                            title={this.props.selectedSuite.title}
-                            subheader="Selected Suite: "
+                            title="Edit Suite: "
+                            subheader={this.props.suiteToEdit.title}
+                        />
+                        <CardHeader
+                            subheader={`Current Dates: ${moment(this.props.suiteToEdit.startDate).format("MM/DD/YYYY")}-${moment(this.props.suiteToEdit.endDate).format("MM/DD/YYYY")}`}
                         />
                         <CardMedia
                             style={{ height: 0, paddingTop: '56.25%' }}
-                            image={this.props.selectedSuite.img}
-                            title={this.props.selectedSuite.title}
+                            image={this.props.suiteToEdit.img}
+                            title={this.props.suiteToEdit.title}
                         />
                     </Card>
                 </div>
 
                 <div style={{ display: "flex", justifyContent: "center" }}>
                         <Button
-                            onClick={this.addSuiteToCart}
+                            onClick={this.editSuiteInCart}
                             color="primary"
                             variant="contained"
                             size="small"
                             style={{ marginTop: "-20px", textDecoration: "none" }}
                         >
-                            Book Dates
+                            Change Dates
                         </Button>
                 </div>
 
@@ -145,8 +147,7 @@ class Reservations2 extends Component {
 
 function mapStateToProps(state) {
     return {
-        suites: state.suites,
-        selectedSuite: state.selectedSuite
+        suiteToEdit: state.suiteToEdit
     }
 }
 

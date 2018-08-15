@@ -3,12 +3,8 @@ import StripeCheckout from "react-stripe-checkout";
 import axios from "axios";
 import {
     Card,
-    CardContent,
     CardHeader,
     CardMedia,
-    Typography,
-    Button,
-    IconButton
 } from "@material-ui/core";
 
 

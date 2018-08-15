@@ -1,6 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import axios from "axios";
 import moment from "moment";
+import {connect} from "react-redux";
 import {
     Card,
     CardContent,
@@ -11,8 +12,10 @@ import {
     IconButton
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
 
 import AlertDialog from "../AlertDialog/AlertDialog"
+import { selectSuiteToEdit } from "../../ducks/reducer";
 
 class Cart extends Component {
     constructor() {
@@ -27,6 +30,7 @@ class Cart extends Component {
         this.handleClickOpen = this.handleClickOpen.bind(this);
         this.handleClose = this.handleClose.bind(this);
         this.deleteItemFromCart = this.deleteItemFromCart.bind(this);
+        this.handleEdit = this.handleEdit.bind(this);
     }
 
     componentDidMount() {
@@ -74,8 +78,12 @@ class Cart extends Component {
         });
     }
 
+    handleEdit(suite) {
+        this.props.selectSuiteToEdit(suite);
+        this.props.history.push("/edit");
+    }
+
     render() {
-        // let { deleteItemFromCart } = this.props
         let mappedCart = this.state.cart.map((item, i) => {
             return (
                 <div key={i}>
@@ -92,12 +100,20 @@ class Cart extends Component {
                         <CardContent>
                             <Typography style={{ display: "flex", justifyContent: "space-between" }}>
                                 Price: ${item.total}
-                                <IconButton
-                                    style={{ marginTop: "-16px" }}
-                                    onClick={() => this.deleteItemFromCart(item.id)}
-                                >
-                                    <DeleteIcon />
-                                </IconButton>
+                                <Fragment>
+                                    <IconButton
+                                        style={{ marginTop: "-16px" }}
+                                        onClick={() => this.handleEdit(item)}
+                                    >
+                                        <EditIcon />
+                                    </IconButton>
+                                    <IconButton
+                                        style={{ marginTop: "-16px" }}
+                                        onClick={() => this.deleteItemFromCart(item.id)}
+                                    >
+                                        <DeleteIcon />
+                                    </IconButton>
+                                </Fragment>
                             </Typography>
                         </CardContent>
                     </Card>
@@ -150,4 +166,4 @@ class Cart extends Component {
     }
 }
 
-export default Cart;
+export default connect(null, { selectSuiteToEdit })(Cart);

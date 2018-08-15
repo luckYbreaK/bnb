@@ -5,6 +5,7 @@ import Suites from "./components/Suites/Suites";
 import Reservations2 from "./components/Reservations/Reservations2";
 import Checkout from "./components/Checkout/Checkout";
 import Cart from "./components/Cart/Cart";
+import Edit from "./components/Edit/Edit"
 
 const routes = (
     <Switch>
@@ -13,6 +14,7 @@ const routes = (
         <Route path="/reservations" component={Reservations2} />
         <Route path="/checkout" component={Checkout} />
         <Route path="/cart" component={Cart} />
+        <Route path="/edit" component={Edit} />
     </Switch>
 );
 

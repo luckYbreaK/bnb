@@ -56,7 +56,17 @@ app.post("/api/login", auth0Ctrl.loginUser);
 app.post("/api/addToCart", (req, res) => {
     req.session.user.cart.push(req.body.suite)
     res.status(200).send(req.session.user.cart);
-})
+});
+app.put("/api/updateItemInCart/:id", (req, res) => {
+    let { startDate, endDate, total } = req.body.suite
+    let index = _.findIndex(req.session.user.cart, ['id', Number(req.params.id)])
+    if (index !== -1) {
+        req.session.user.cart[index].startDate = startDate;
+        req.session.user.cart[index].endDate = endDate;
+        req.session.user.cart[index].total = total;
+    }
+    res.status(200).send(req.session.user.cart);
+});
 app.delete("/api/deleteFromCart/:id", (req, res) => {
     let index = _.findIndex(req.session.user.cart, ['id', Number(req.params.id)])
     if (index !== -1) {
