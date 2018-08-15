@@ -22,8 +22,10 @@ module.exports = {
         req.session.user = Object.assign({}, req.session.user, responseWithUserData.data);
 
         const db = req.app.get("db");
+
         let responseIsExistingUser = await db.users.select_user([req.session.user.email]);
         if (responseIsExistingUser.length > 0) {
+            req.session.user.id = responseIsExistingUser[0].id;
             let updates = {};
             updates.username = req.session.user.nickname;
             if (req.session.user.name.includes(" ")) {
@@ -42,7 +44,8 @@ module.exports = {
                 firstName = req.session.user.name.match(/^\w+/)[0];
                 lastName = req.session.user.name.match(/\w+$/)[0];
             }
-            await db.users.insert_user([nickname, email, firstName, lastName]);
+            let responseWithNewUser = await db.users.insert_user([nickname, email, firstName, lastName]);
+            req.session.user.id = responseWithNewUser[0].id;
         }
 
 
