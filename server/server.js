@@ -66,10 +66,10 @@ app.get("/api/suites", suitesCtrl.readSuites);
 app.get('/auth/callback', auth0Ctrl.auth0);
 app.get('/api/logout', auth0Ctrl.logoutUser);
 app.get("/api/getCart", cartCtrl.readCart);
-app.get("/api/reservations/:id", (req, res) => {
+app.get("/api/reservations/:id", async (req, res) => {
     const db = req.app.get("db");
-    
-
+    let responseWithUserOrders = await db.orders.select_orders_by_user([Number(req.params.id)]);
+    res.status(200).send(responseWithUserOrders);
 });
 app.put("/api/updateItemInCart/:id", cartCtrl.updateCart);
 app.put("/api/updateUserInfo/:id", async (req, res) => {
