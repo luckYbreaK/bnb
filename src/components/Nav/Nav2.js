@@ -15,7 +15,7 @@ import {
     ListItemText,
     ListItemIcon,
 } from "@material-ui/core";
-import { Menu, Hotel, ShoppingCart } from '@material-ui/icons';
+import { Menu, Hotel, ShoppingCart, AccountCircle } from '@material-ui/icons';
 
 import "./Nav2.css";
 import { updateLoggedIn } from "../../ducks/reducer";
@@ -115,6 +115,21 @@ class Nav2 extends Component {
                                                 <ListItemText primary="Shopping Cart" />
                                             </ListItem>
                                         </Link>
+                                        {
+                                            this.props.loggedIn ?
+                                                <Link to="/myreservations" style={{ textDecoration: "none" }}>
+                                                    <ListItem button>
+                                                        <ListItemIcon>
+                                                            <AccountCircle />
+                                                        </ListItemIcon>
+                                                        <ListItemText
+                                                            primary={this.props.loggedIn ? "My Reservations" : ""}
+                                                        />
+                                                    </ListItem>
+                                                </Link>
+                                                :
+                                                null
+                                        }
                                         <ListItem button>
                                             <ListItemText
                                                 primary={this.props.loggedIn ? "Log Out" : "Log In / Sign Up"}

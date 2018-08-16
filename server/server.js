@@ -17,6 +17,7 @@ app = express();
 const { SERVER_PORT, CONNECTION_STRING, SESSION_SECRET } = process.env;
 
 // MIDDLEWARE
+app.use( express.static( `${__dirname}/../build` ) );
 app.use(bodyParser.json());
 app.use(cors());
 app.use(session({
@@ -65,6 +66,11 @@ app.get("/api/suites", suitesCtrl.readSuites);
 app.get('/auth/callback', auth0Ctrl.auth0);
 app.get('/api/logout', auth0Ctrl.logoutUser);
 app.get("/api/getCart", cartCtrl.readCart);
+app.get("/api/reservations/:id", (req, res) => {
+    const db = req.app.get("db");
+    
+
+});
 app.put("/api/updateItemInCart/:id", cartCtrl.updateCart);
 app.put("/api/updateUserInfo/:id", async (req, res) => {
     let { firstName, lastName, email, phoneNumber } = req.body.user

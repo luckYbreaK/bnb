@@ -59,7 +59,8 @@ class Cart extends Component {
             } else if(!data.firstName || !data.lastName || !data.email || !data.phone){
                     this.handleFormOpen();
             } else {
-                window.location = "http://localhost:3000/#/checkout";
+                this.props.history.push("/checkout");
+                
             }
         })
     }
@@ -120,7 +121,7 @@ class Cart extends Component {
                 phoneNumber: this.state.phoneNumber ? this.state.phoneNumber : phone
             }
         }).then(res => {
-            window.location = "http://localhost:3000/#/checkout";
+            this.props.history.push("/checkout");
         });
     }
 
