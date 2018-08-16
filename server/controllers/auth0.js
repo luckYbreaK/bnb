@@ -26,6 +26,8 @@ module.exports = {
         let responseIsExistingUser = await db.users.select_user([req.session.user.email]);
         if (responseIsExistingUser.length > 0) {
             req.session.user.id = responseIsExistingUser[0].id;
+            req.session.user.firstName = responseIsExistingUser[0].first_name;
+            req.session.user.lastName = responseIsExistingUser[0].last_name;
             let updates = {};
             updates.username = req.session.user.nickname;
             if (req.session.user.name.includes(" ")) {
@@ -46,6 +48,8 @@ module.exports = {
             }
             let responseWithNewUser = await db.users.insert_user([nickname, email, firstName, lastName]);
             req.session.user.id = responseWithNewUser[0].id;
+            req.session.user.firstName = responseIsExistingUser[0].first_name;
+            req.session.user.lastName = responseIsExistingUser[0].last_name;
         }
 
 

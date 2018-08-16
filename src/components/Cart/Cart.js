@@ -14,7 +14,8 @@ import {
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 
-import AlertDialog from "../AlertDialog/AlertDialog"
+import AlertDialog from "../AlertDialog/AlertDialog";
+import FormDialog from "../FormDialog/FormDialog";
 import { selectSuiteToEdit } from "../../ducks/reducer";
 
 class Cart extends Component {
@@ -23,7 +24,12 @@ class Cart extends Component {
 
         this.state = {
             open: false,
-            cart: []
+            formOpen: false,
+            cart: [],
+            firstName: "",
+            lastName: "",
+            email: "",
+            phoneNumber: null
         }
 
         this.handleCheckout = this.handleCheckout.bind(this);
@@ -31,6 +37,10 @@ class Cart extends Component {
         this.handleClose = this.handleClose.bind(this);
         this.deleteItemFromCart = this.deleteItemFromCart.bind(this);
         this.handleEdit = this.handleEdit.bind(this);
+        this.handleFormOpen = this.handleFormOpen.bind(this);
+        this.handleFormClose = this.handleFormClose.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     componentDidMount() {
@@ -43,12 +53,12 @@ class Cart extends Component {
 
     handleCheckout() {
         axios.get("/api/userData").then(res => {
-            let email = null;
             let { data } = res;
             if (!data.email) {
                 this.handleClickOpen();
+            } else if(!data.firstName || !data.lastName || !data.email || !data.phone){
+                    this.handleFormOpen();
             } else {
-                email = data.email;
                 window.location = "http://localhost:3000/#/checkout";
             }
         })
@@ -70,6 +80,18 @@ class Cart extends Component {
         });
     }
 
+    handleFormOpen() {
+        this.setState({
+            formOpen: true
+        });
+    }
+
+    handleFormClose() {
+        this.setState({
+            formOpen: false
+        });
+    }
+
     deleteItemFromCart(id) {
         axios.delete(`/api/deleteFromCart/${id}`).then(res => {
             this.setState({
@@ -81,6 +103,25 @@ class Cart extends Component {
     handleEdit(suite) {
         this.props.selectSuiteToEdit(suite);
         this.props.history.push("/edit");
+    }
+
+    handleChange(name, val) {
+        this.setState({
+            [name]: val
+        });
+    };
+
+    handleSubmit(id, email, phone, firstName, lastName) {
+        axios.put(`/api/updateUserInfo/${id}`, {user: 
+            {
+                firstName: this.state.firstName ? this.state.firstName : firstName,
+                lastName: this.state.lastName ? this.state.lastName : lastName,
+                email: this.state.email ? this.state.email : email,
+                phoneNumber: this.state.phoneNumber ? this.state.phoneNumber : phone
+            }
+        }).then(res => {
+            window.location = "http://localhost:3000/#/checkout";
+        });
     }
 
     render() {
@@ -160,6 +201,19 @@ class Cart extends Component {
                         open={this.state.open}
                         handleClose={this.handleClose}
                         message="Please Log In"
+                    />
+
+                    <FormDialog
+                        open={this.state.formOpen}
+                        handleClose={this.handleFormClose}
+                        handleChange={this.handleChange}
+                        handleSubmit={this.handleSubmit}
+                        firstName
+                        lastName
+                        email
+                        phone
+                        title="Personal Info"
+                        message="Please verify that the info we have for you is current."
                     />
                 </div>
         );

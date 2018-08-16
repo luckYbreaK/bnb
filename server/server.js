@@ -44,6 +44,12 @@ app.get('/auth/callback', auth0Ctrl.auth0);
 app.get('/api/logout', auth0Ctrl.logoutUser);
 app.get("/api/getCart", cartCtrl.readCart);
 app.put("/api/updateItemInCart/:id", cartCtrl.updateCart);
+app.put("/api/updateUserInfo/:id", async (req, res) => {
+    let { firstName, lastName, email, phoneNumber } = req.body.user
+    const db = req.app.get("db");
+    await db.users.update_user_info([email, phoneNumber, firstName, lastName, Number(req.params.id)]);
+    res.sendStatus(200);
+});
 app.delete("/api/deleteFromCart/:id", cartCtrl.deleteItem);
 app.delete("/api/emptyCart", cartCtrl.deleteAllItems);
 
