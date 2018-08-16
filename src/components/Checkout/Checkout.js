@@ -34,12 +34,15 @@ class Checkout extends Component {
         token.card = void 0;
         console.log('token', token);
         axios.post('/api/payment', { token, amount: this.getTotal() }).then(res => {
-            axios.delete("/api/emptyCart").then(res => {
-                this.setState({
-                    cart: res.data,
-                    transactionComplete: true
+            axios.post("/api/createOrder").then(res => {
+                axios.delete("/api/emptyCart").then(res => {
+                    this.setState({
+                        cart: res.data,
+                        transactionComplete: true
+                    });
                 });
             });
+
         });
     }
 
@@ -60,7 +63,7 @@ class Checkout extends Component {
                             title="Castle Creek Inn"
                         />
                     </Card>
-                    <div style={{display: "flex", justifyContent: "center"}}>
+                    <div style={{ display: "flex", justifyContent: "center" }}>
                         <StripeCheckout
                             token={this.onToken}
                             stripeKey={REACT_APP_PUB_KEY}

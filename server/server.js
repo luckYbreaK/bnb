@@ -5,6 +5,7 @@ const express = require("express"),
     session = require("express-session"),
     cors = require("cors"),
     _ = require("lodash"),
+    moment = require("moment"),
     suitesCtrl = require("./controllers/suites"),
     auth0Ctrl = require("./controllers/auth0"),
     stripeCtrl = require("./controllers/stripe"),
@@ -38,6 +39,27 @@ app.use((req, res, next) => {
 app.post('/api/payment', stripeCtrl.charge);
 app.post("/api/login", auth0Ctrl.loginUser);
 app.post("/api/addToCart", cartCtrl.createItem);
+app.post("/api/createOrder", (req, res) => {
+    let { cart } = req.session.user;
+    let suitesArr = cart.filter(item => item.startDate);
+    //for a future expansion
+    let packagesArr = cart.filter(item => !item.startDate);
+
+    const db = req.app.get("db");
+    if(suitesArr.length > 1) {
+        suitesArr.forEach(suite => {
+            db.orders.insert_into_orders([moment(), moment(suite.startDate).format("YYYY-MM-DD"), moment(suite.endDate).format("YYYY-MM-DD"), suite.total, req.session.user.id, suite.id])
+                .then(res => {});
+        });
+        res.sendStatus(200);
+    } else if(suitesArr.length === 1) {
+        let { startDate, endDate, total, id} = suitesArr[0];
+        db.orders.insert_into_orders([moment(), moment(startDate).format("YYYY-MM-DD"), moment(endDate).format("YYYY-MM-DD"), total, req.session.user.id, id])
+            .then(res => {});
+        res.sendStatus(200);
+    }
+
+});
 app.get("/api/userData", usersCtrl.readUserData);
 app.get("/api/suites", suitesCtrl.readSuites);
 app.get('/auth/callback', auth0Ctrl.auth0);
