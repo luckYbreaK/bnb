@@ -53,6 +53,7 @@ class Cart extends Component {
 
     handleCheckout() {
         axios.get("/api/userData").then(res => {
+            
             let { data } = res;
             if (!data.email) {
                 this.handleClickOpen();
