@@ -62,6 +62,7 @@ class Nav2 extends Component {
     logout() {
         axios.get('/api/logout').then(res => {
             this.props.updateLoggedIn(false);
+            this.props.history.push("/");
         });
     }
 
