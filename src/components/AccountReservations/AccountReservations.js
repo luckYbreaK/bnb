@@ -3,12 +3,8 @@ import axios from "axios";
 import moment from "moment";
 import {
     Card,
-    CardContent,
     CardHeader,
-    CardMedia,
-    Typography,
-    Button,
-    IconButton
+    CardMedia
 } from "@material-ui/core";
 
 const context = require.context("../../img/card", true, /\.(jpg)$/);
@@ -54,7 +50,7 @@ export default class AccountReservations extends Component {
                     <Card style={{ maxWidth: 400, borderRadius: 0 }}>
                         <CardHeader
                             title={reservation.title}
-                            subheader={`${moment(reservation.startDate).format("MM/DD/YYYY")}-${moment(reservation.endDate).format("MM/DD/YYYY")}`}
+                            subheader={`${moment(reservation.arrival_date).format("MM/DD/YYYY")}-${moment(reservation.departure_date).format("MM/DD/YYYY")}`}
                         />
                         <CardMedia
                             style={{ height: 0, paddingTop: '56.25%' }}
