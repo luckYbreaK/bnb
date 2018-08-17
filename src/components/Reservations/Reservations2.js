@@ -96,7 +96,6 @@ class Reservations2 extends Component {
                 RESERVATIONS.push(moment(dateRange.arrival_date).add(i, 'd'));
             }
         });
-        console.log(RESERVATIONS);
         
         const isDayBlocked = day => RESERVATIONS.filter(date => moment(date).isSame(day, 'day')).length > 0;
         // let day = moment("2018-08-10").add(5, 'd');
