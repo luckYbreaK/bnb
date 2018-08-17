@@ -7,6 +7,7 @@ import Checkout from "./components/Checkout/Checkout";
 import Cart from "./components/Cart/Cart";
 import Edit from "./components/Edit/Edit"
 import AccountReservations from "./components/AccountReservations/AccountReservations";
+import ContactUs from "./components/ContactUs/ContactUs";
 
 const routes = (
     <Switch>
@@ -17,6 +18,7 @@ const routes = (
         <Route path="/cart" component={Cart} />
         <Route path="/edit" component={Edit} />
         <Route path="/myreservations" component={AccountReservations} />
+        <Route path="/contactus" component={ContactUs} />
     </Switch>
 );
 

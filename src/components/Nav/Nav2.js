@@ -137,6 +137,14 @@ class Nav2 extends Component {
                                                 onClick={this.props.loggedIn ? this.logout : this.login}
                                             />
                                         </ListItem>
+                                        <Link to="/contactus" style={{ textDecoration: "none" }}>
+                                            <ListItem button>
+                                                <ListItemText
+                                                    primary="Contact Us"
+                                                    inset
+                                                />
+                                            </ListItem>
+                                        </Link>
                                     </List>
                                 </div>
                             </Drawer>
