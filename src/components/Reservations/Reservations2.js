@@ -22,13 +22,23 @@ class Reservations2 extends Component {
             startDate: null,
             endDate: null,
             focusedInput: null,
-            open: false
+            open: false,
+            reservedDates: []
         };
 
         this.addSuiteToCart = this.addSuiteToCart.bind(this);
         this.calcTotal = this.calcTotal.bind(this);
         this.handleClickOpen = this.handleClickOpen.bind(this);
         this.handleClose = this.handleClose.bind(this);
+    }
+
+    componentDidMount() {
+        let {id} = this.props.selectedSuite
+        axios.get(`/api/reservedDatesForSuite/${id}`).then(res => {
+            this.setState({
+                reservedDates: res.data
+            });
+        });
     }
 
     calcTotal(startDate, endDate, suite) {
@@ -77,8 +87,18 @@ class Reservations2 extends Component {
     }
 
     render() {
-        const RESERVATIONS = [moment(), moment().add(10, 'days')];
-        const isDayBlocked = day => RESERVATIONS.filter(moment => moment.isSame(day, 'day')).length > 0;
+        // const RESERVATIONS = [moment(), moment().add(10, 'days')];
+        const RESERVATIONS = [];
+        this.state.reservedDates.forEach(dateRange => {
+            let nightsReserved = moment(dateRange.departure_date).format("DDD") - moment(dateRange.arrival_date).format("DDD");
+
+            for (let i = 0; i < nightsReserved; i++) {
+                RESERVATIONS.push(moment(dateRange.arrival_date).add(i, 'd'));
+            }
+        });
+        console.log(RESERVATIONS);
+        
+        const isDayBlocked = day => RESERVATIONS.filter(date => moment(date).isSame(day, 'day')).length > 0;
         // let day = moment("2018-08-10").add(5, 'd');
         // const isDayBlocked = d => d.isSame(day, 'day'); 
         return (

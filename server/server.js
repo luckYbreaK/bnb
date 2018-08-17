@@ -71,6 +71,11 @@ app.get("/api/reservations/:id", async (req, res) => {
     let responseWithUserOrders = await db.orders.select_orders_by_user([Number(req.params.id)]);
     res.status(200).send(responseWithUserOrders);
 });
+app.get("/api/reservedDatesForSuite/:id", async (req, res) => {
+    const db = req.app.get("db");
+    let dates = await db.orders.select_orders_by_dateandsuite([req.params.id]);
+    res.status(200).send(dates);
+});
 app.put("/api/updateItemInCart/:id", cartCtrl.updateCart);
 app.put("/api/updateUserInfo/:id", async (req, res) => {
     let { firstName, lastName, email, phoneNumber } = req.body.user
