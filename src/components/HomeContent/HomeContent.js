@@ -10,8 +10,8 @@ import {
     CardHeader
 } from "@material-ui/core";
 
-import { updateSelectedSuite } from "../../../ducks/reducer";
-import SuiteModal from "../../Modal/SuiteModal";
+import { updateSelectedSuite } from "../../ducks/reducer";
+import SuiteModal from "../SuiteModal/SuiteModal";
 
 class HomeContent extends Component {
     constructor() {
@@ -37,13 +37,13 @@ class HomeContent extends Component {
 
     render() {
         let { suites } = this.props
-        let suite = suites[5] ? suites[5] : "";
+        let suite = suites[6] ? suites[6] : "";
 
         return (
             <div>
 
                 <div>
-                    <Card style={{ maxWidth: 400, borderRadius: 0 }}>
+                    <Card style={{ maxWidth: 420, borderRadius: 0 }}>
                         <CardHeader
                             title={suite.title}
                             subheader="Featured Suite"
@@ -67,7 +67,7 @@ class HomeContent extends Component {
                 </div>
 
                 <div>
-                    <Card style={{ maxWidth: 400, borderRadius: 0 }}>
+                    <Card style={{ maxWidth: 420, borderRadius: 0 }}>
                         <CardContent>
                             <Typography gutterBottom variant="headline" component="h2">
                                 Specials
@@ -77,7 +77,7 @@ class HomeContent extends Component {
                 </div>
 
                 <div>
-                    <Card style={{ maxWidth: 400, borderRadius: 0 }}>
+                    <Card style={{ maxWidth: 420, borderRadius: 0 }}>
                         <CardHeader
                             title="The Castle on the Creek"
                             subheader="A Royal Experience"

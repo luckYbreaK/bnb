@@ -2,11 +2,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Modal from '@material-ui/core/Modal';
-import Button from '@material-ui/core/Button';
-
-// import "./SuiteModal.css"
+import { Typography, Modal, Button } from '@material-ui/core';
 
 function getModalStyle() {
     const top = 50
@@ -23,7 +19,6 @@ const styles = theme => ({
     paper: {
         position: 'absolute',
         width: '300px',
-        // maxWidth: '300px',
         height: '300px',
         backgroundColor: theme.palette.background.paper,
         boxShadow: theme.shadows[5],
@@ -62,12 +57,9 @@ class SuiteModal extends Component {
 
         return (
             <div>
-                {/* <Typography gutterBottom>Click to get the full Modal experience!</Typography>
-        <Button onClick={this.handleOpen}>Open Modal</Button> */}
                 <Modal
                     open={open}
                     onClose={() => handleClose({})}
-
                 >
                     <div style={getModalStyle()} className={classes.paper}>
                         <Typography variant="title" id="modal-title" align="center" gutterBottom>

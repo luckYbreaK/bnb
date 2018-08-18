@@ -1,80 +1,168 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { withRouter } from "react-router";
 import { connect } from "react-redux";
-
-import logo from "../../img/logo/logo.png";
-import { resetCart } from "../../ducks/reducer";
+import axios from "axios";
+import {
+    Button,
+    Typography,
+    AppBar,
+    Toolbar,
+    IconButton,
+    Drawer,
+    List,
+    ListItem,
+    ListItemText,
+    ListItemIcon,
+} from "@material-ui/core";
+import { Menu, Hotel, ShoppingCart, AccountCircle } from '@material-ui/icons';
 
 import "./Nav.css";
+import { updateLoggedIn } from "../../ducks/reducer";
 
 class Nav extends Component {
     constructor() {
         super();
 
         this.state = {
-            showMenu: false,
-            loggedIn: false
+            drawerOpen: false
         }
 
-        // this.login = this.login.bind(this);
+        this.toggleDrawer = this.toggleDrawer.bind(this);
+        this.login = this.login.bind(this);
         this.logout = this.logout.bind(this);
     }
 
-    // componentDidMount() {
-    //     axios.get("/api/userData").then(res => {
-    //         console.log(res);      
-    //     })
-    // }
+    componentDidUpdate() {
+        axios.get("/api/userData").then(res => {
+            let { data } = res;
+            if (data.email) {
+                this.props.updateLoggedIn(true);
+            }
+        });
+    }
+
+    toggleDrawer() {
+        this.setState({
+            drawerOpen: !this.state.drawerOpen
+        });
+    }
 
     login() {
-        let { REACT_APP_AUTH0_DOMAIN, REACT_APP_AUTH0_CLIENT_ID } = process.env;
-        let url = `${encodeURIComponent(window.location.origin)}/auth/callback`
-        window.location = `https://${REACT_APP_AUTH0_DOMAIN}/authorize?client_id=${REACT_APP_AUTH0_CLIENT_ID}&scope=openid%20profile%20email&redirect_uri=${url}&response_type=code`;
+        let { history } = this.props;
+        axios.post("/api/login", { pathname: history.location.pathname }).then(res => {
+
+            let { REACT_APP_AUTH0_DOMAIN, REACT_APP_AUTH0_CLIENT_ID } = process.env;
+            let url = `${encodeURIComponent(window.location.origin)}/auth/callback`
+            window.location = `https://${REACT_APP_AUTH0_DOMAIN}/authorize?client_id=${REACT_APP_AUTH0_CLIENT_ID}&scope=openid%20profile%20email&redirect_uri=${url}&response_type=code`;
+
+        });
     }
 
     logout() {
-        // axios.get('/api/logout').then(() => {
-            // this.setState({ user: null });
-        // });
-        
-        this.props.resetCart();
-        console.log("logged out!");
+        let { updateLoggedIn, history } = this.props;
+        axios.get('/api/logout').then(res => {
+            updateLoggedIn(false);
+            history.push("/");
+        });
     }
 
     render() {
         return (
-            <div className="navbar">
-                <div className="logo">
-                    <Link to="/"><img src={logo} alt="" /></Link>
-                    <h2>801-000-0000</h2>
-                </div>
-                <div className="menu">
-                    <img
-                        src="https://cdn4.iconfinder.com/data/icons/flat-black/512/menu.png"
-                        alt="hamburger menu"
-                        onClick={() => this.setState({ showMenu: !this.state.showMenu })}
-                    />
-                    {
-                        this.state.showMenu
-                            ? (
-                                <div>
-                                    <ul>
-                                        <Link to="/suites"><li>Suites</li></Link>
-                                        <li>Register</li>
-                                        <li onClick={this.login}>Sign In</li>
-                                        <li onClick={this.logout}>Sign Out</li>
-                                    </ul>
+            <div>
+
+                <AppBar position="static">
+                    <Toolbar disableGutters className="flex_row toolbar">
+
+                        <div className="flex_column">
+                            <Link to="/">
+                                <Button>
+                                    <img src="img.1/logo/logo.png" alt="Castle Creek logo" />
+                                </Button>
+                            </Link>
+                            <Typography align="center">
+                                801-000-0000
+                    </Typography>
+                        </div>
+
+                        <IconButton onClick={this.toggleDrawer}>
+                            <Menu style={{ fontSize: '40px' }}/>
+                            <Drawer
+                                anchor="right"
+                                open={this.state.drawerOpen}
+                                onClose={this.toggleDrawer}
+                                transitionDuration={{ enter: 400, exit: 400 }}
+                            >
+                                <div
+                                    tabIndex={0}
+                                    role="button"
+                                    onClick={this.toggleDrawer}
+                                    onKeyDown={this.toggleDrawer}
+                                >
+                                    <List >
+                                        <Link to="/suites" style={{ textDecoration: "none" }}>
+                                            <ListItem button>
+                                                <ListItemIcon>
+                                                    <Hotel />
+                                                </ListItemIcon>
+                                                <ListItemText primary="Suites" />
+                                            </ListItem>
+                                        </Link>
+                                        <Link to="/cart" style={{ textDecoration: "none" }}>
+                                            <ListItem button>
+                                                <ListItemIcon>
+                                                    <ShoppingCart />
+                                                </ListItemIcon>
+                                                <ListItemText primary="Shopping Cart" />
+                                            </ListItem>
+                                        </Link>
+                                        {
+                                            this.props.loggedIn ?
+                                                <Link to="/myreservations" style={{ textDecoration: "none" }}>
+                                                    <ListItem button>
+                                                        <ListItemIcon>
+                                                            <AccountCircle />
+                                                        </ListItemIcon>
+                                                        <ListItemText
+                                                            primary={this.props.loggedIn ? "My Reservations" : ""}
+                                                        />
+                                                    </ListItem>
+                                                </Link>
+                                                :
+                                                null
+                                        }
+                                        <ListItem button>
+                                            <ListItemText
+                                                primary={this.props.loggedIn ? "Log Out" : "Log In / Sign Up"}
+                                                inset
+                                                onClick={this.props.loggedIn ? this.logout : this.login}
+                                            />
+                                        </ListItem>
+                                        <Link to="/contactus" style={{ textDecoration: "none" }}>
+                                            <ListItem button>
+                                                <ListItemText
+                                                    primary="Contact Us"
+                                                    inset
+                                                />
+                                            </ListItem>
+                                        </Link>
+                                    </List>
                                 </div>
-                            )
-                            : (
-                                null
-                            )
-                    }
-                </div>
+                            </Drawer>
+                        </IconButton>
+
+                    </Toolbar>
+                </AppBar>
+
             </div>
         );
     }
 }
 
-export default connect(null, { resetCart })(Nav);
+function mapStateToProps(state) {
+    return {
+        loggedIn: state.loggedIn
+    }
+}
+
+export default withRouter(connect(mapStateToProps, { updateLoggedIn })(Nav));
