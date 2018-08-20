@@ -79,6 +79,8 @@ class Checkout extends Component {
                             token={this.onToken}
                             stripeKey={REACT_APP_PUB_KEY}
                             amount={total}
+                            name="Castle Creek Inn"
+                            image="http://castlecreekbb.com/wp-content/uploads/2018/05/castle-creek-inn-logo.png"
                         />
                     </div>
                 </div>
