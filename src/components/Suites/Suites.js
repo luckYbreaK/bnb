@@ -8,13 +8,21 @@ import {
     CardActions,
     CardHeader
 } from "@material-ui/core";
+import { withStyles } from '@material-ui/core/styles';
 
 import { updateSelectedSuite, updateSuites } from "../../ducks/reducer";
-import SuiteModal from "../Modal/SuiteModal";
-import "../Modal/SuiteModal.css";
+import SuiteModal from "../SuiteModal/SuiteModal";
+import "./Suite.css";
 // Imports a local file with the images
-const context = require.context("../../img/card", true, /\.(jpg)$/);
+const context = require.context("../../../public/img.1/card", true, /\.(jpg)$/);
 const regex = /\b[A-Za-z]+/;
+
+const styles = {
+    title: {
+        fontFamily: 'Niconne, cursive',
+        fontSize: '2.0rem'
+    }
+};
 
 class Suites extends Component {
     constructor() {
@@ -58,29 +66,27 @@ class Suites extends Component {
     };
 
     render() {
-        let { suites } = this.props;
+        let { suites, classes } = this.props;
 
         let mappedSuites = suites.map((suite, i) =>
             <div key={i}>
-                <Card style={{ maxWidth: 400, borderRadius: 0 }}>
+                <Card style={{ maxWidth: 420, borderRadius: 0 }}>
 
                     <CardHeader
                         title={suite.title}
+                        classes={{ title: classes.title }}
                     />
-                    <img src={suite.img} alt="" />
+                    <img src={suite.img} alt="" onClick={() => this.handleOpen(suite)}/>
                     <CardActions style={{ justifyContent: "center" }}>
-                            <div style={{ backgroundColor: 'rgb(117, 117, 117)', width: "100%", display: "flex", justifyContent: "center", margin: "-70px 20px 0 20px", opacity: "0.6", borderRadius: "5px"}}>
-                                {/* <IconButton color="primary" style={{ opacity: "1" }} onClick={this.handleOpen}>
-                                        <Info />
-                                    </IconButton> */}
-                                <Button
-                                    style={{color: "white"}}
-                                    onClick={() => this.handleOpen(suite)}
-                                >
-                                    View Details
+                        <div style={{ backgroundColor: 'rgb(117, 117, 117)', width: "100%", display: "flex", justifyContent: "center", margin: "-70px 20px 0 20px", opacity: "0.6", borderRadius: "5px" }}>
+                            <Button
+                                style={{ color: "white" }}
+                                onClick={() => this.handleOpen(suite)}
+                            >
+                                View Details
                                 </Button>
-                            </div>
-                        </CardActions>
+                        </div>
+                    </CardActions>
                 </Card>
             </div>
         );
@@ -89,11 +95,18 @@ class Suites extends Component {
             circular: false
         };
         let dotsSetting = {
-            placeOn: "beneath"
+            placeOn: "beneath",
+            style: {
+                currDotColor: "#12582f"
+            }
         }
 
         let buttonSetting = {
             placeOn: "bottom-beneath",
+            style: {
+                left: { background: "#4527A0" },
+                right: { background: "#4527A0" }
+            }
             // hoverEvent: true
         }
 
@@ -105,43 +118,33 @@ class Suites extends Component {
 
         let itemStyle = {
             height: "100%",
+            width: "100%",
             background: "transparent"
         }
 
         return (
-            this.props.suites ?
-            <div>
 
-                <CarouselSlider
-                    // slideItems={mappedSuites}
-                    slideCpnts={mappedSuites}
-                    manner={manner}
-                    // accEle={accEle}
-                    dotsSetting={dotsSetting}
-                    buttonSetting={buttonSetting}
-                    sliderBoxStyle={sliderBoxStyle}
-                    itemStyle={itemStyle}
-                />
-                <SuiteModal
-                    handleClose={this.handleClose}
-                    open={this.state.open}
-                    selectedSuite={this.props.selectedSuite}
-                    style={{zIndex: "3000 !important"}}
-                />
-                {/* <Modal
-                    show={this.state.isOpen}
-                    onClose={() => this.togleModal("close", {})}
-                >
-                    <img src={selectedSuite.img} alt={selectedSuite.title} />
-                    <h3>{selectedSuite.title}</h3>
-                    <p>{selectedSuite.description}</p>
-                    <p>${selectedSuite.weekday_price}</p>
-                    <p>${selectedSuite.weekend_price}</p>
-                    <p>{selectedSuite.description}</p>
-                </Modal> */}
-            </div>
-            :
-            ""
+            this.props.suites ?
+                <div>
+
+                    <CarouselSlider
+                        slideCpnts={mappedSuites}
+                        manner={manner}
+                        dotsSetting={dotsSetting}
+                        buttonSetting={buttonSetting}
+                        sliderBoxStyle={sliderBoxStyle}
+                        itemStyle={itemStyle}
+                    />
+
+                    <SuiteModal
+                        handleClose={this.handleClose}
+                        open={this.state.open}
+                        selectedSuite={this.props.selectedSuite}
+                    />
+
+                </div>
+                :
+                ""
         );
     }
 }
@@ -153,4 +156,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { updateSelectedSuite, updateSuites })(Suites);
+export default withStyles(styles)(connect(mapStateToProps, { updateSelectedSuite, updateSuites })(Suites));

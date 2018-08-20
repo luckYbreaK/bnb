@@ -1,6 +1,6 @@
 import React from "react";
 import {Switch, Route} from "react-router-dom";
-import Home2 from "./components/Home/Home2";
+import Home from "./components/Home/Home";
 import Suites from "./components/Suites/Suites";
 import Reservations2 from "./components/Reservations/Reservations2";
 import Checkout from "./components/Checkout/Checkout";
@@ -11,7 +11,7 @@ import ContactUs from "./components/ContactUs/ContactUs";
 
 const routes = (
     <Switch>
-        <Route exact path="/" component={Home2} />
+        <Route exact path="/" component={Home} />
         <Route path="/suites" component={Suites} />
         <Route path="/reservations" component={Reservations2} />
         <Route path="/checkout" component={Checkout} />

@@ -4,13 +4,27 @@ import moment from "moment";
 import {
     Card,
     CardHeader,
-    CardMedia
+    CardMedia,
+    Divider
 } from "@material-ui/core";
+import { withStyles } from '@material-ui/core/styles';
 
 const context = require.context("../../img/card", true, /\.(jpg)$/);
 const regex = /\b[A-Za-z]+/;
 
-export default class AccountReservations extends Component {
+const styles = {
+    title: {
+        fontFamily: 'Niconne, cursive',
+        fontSize: '2.0rem'
+    },
+    subheader: {
+        color: "#12582f",
+        fontWeight: "bold",
+        fontSize: '1.25rem'
+    }
+};
+
+class AccountReservations extends Component {
     constructor() {
         super();
 
@@ -44,13 +58,15 @@ export default class AccountReservations extends Component {
     }
 
     render() {
+        let { classes } = this.props
         let reservations = this.state.reservations.map((reservation, i) => {
             return (
                 <div key={i}>
                     <Card style={{ maxWidth: 400, borderRadius: 0 }}>
                         <CardHeader
                             title={reservation.title}
-                            subheader={`${moment(reservation.arrival_date).format("MM/DD/YYYY")}-${moment(reservation.departure_date).format("MM/DD/YYYY")}`}
+                            subheader={`${moment(reservation.arrival_date).format("MM/DD/YYYY")} - ${moment(reservation.departure_date).format("MM/DD/YYYY")}`}
+                            classes={{title: classes.title, subheader: classes.subheader}}
                         />
                         <CardMedia
                             style={{ height: 0, paddingTop: '56.25%' }}
@@ -58,6 +74,7 @@ export default class AccountReservations extends Component {
                             title={reservation.title}
                         />
                     </Card>
+                    <Divider style={{height: ".25em"}}/>
                 </div>
             );
         });
@@ -69,16 +86,20 @@ export default class AccountReservations extends Component {
                     <Card style={{ maxWidth: 400, borderRadius: 0 }}>
                         <CardHeader
                             title="You Don't Have Any Reservations :("
+                            classes={{title: classes.title}}
                         />
                     </Card>
+                    <Divider style={{height: ".25em"}}/>
                 </div>
                 :
                 <div>
                     <Card style={{ maxWidth: 400, borderRadius: 0 }}>
                         <CardHeader
                             title="Reservations"
+                            classes={{title: classes.title}}
                         />
                     </Card>
+                    <Divider style={{height: ".25em"}}/>
                     <div>
                         {reservations}
                     </div>
@@ -86,3 +107,5 @@ export default class AccountReservations extends Component {
         );
     }
 }
+
+export default withStyles(styles)(AccountReservations);

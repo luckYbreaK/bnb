@@ -1,10 +1,21 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { TextField, Card, CardHeader, Button } from "@material-ui/core";
+import { TextField, Card, CardHeader, Button, Divider } from "@material-ui/core";
+import { withStyles } from '@material-ui/core/styles';
 
 import AlertDialog from "../AlertDialog/AlertDialog";
 
-export default class ContactUs extends Component {
+const styles = {
+    title: {
+        fontFamily: 'Niconne, cursive',
+        fontSize: '2.0rem'
+    },
+    input: {
+        color: "#12582f"
+    }
+};
+
+class ContactUs extends Component {
     constructor() {
         super();
 
@@ -54,12 +65,14 @@ export default class ContactUs extends Component {
     }
 
     render() {
+        let { classes } = this.props
         return (
             <div>
                 <Card style={{ maxWidth: 400, borderRadius: 0 }}>
                     <Card style={{ maxWidth: 400, borderRadius: 0 }}>
-                        <CardHeader title="Get in touch with us" />
+                        <CardHeader title="Get in touch with us" classes={{title: classes.title}}/>        
                     </Card>
+                    <Divider style={{height: ".25em"}}/>
                     <div style={{ display: "flex", flexDirection: "column", padding: "0 30px", marginBottom: "50px" }}>
                         <TextField
                             id="name"
@@ -68,6 +81,7 @@ export default class ContactUs extends Component {
                             required
                             onChange={(e) => this.handleChange("name", e.target.value)}
                             value={this.state.name}
+                            style={{color: "#12582f"}}
                         />
                         <TextField
                             id="email"
@@ -111,9 +125,11 @@ export default class ContactUs extends Component {
                 <AlertDialog
                         open={this.state.open}
                         handleClose={this.handleClose}
-                        message="Email Sent!"
+                        message="Thank you for you email, we'll promptly ignore it!"
                     />
             </div>
         );
     }
 }
+
+export default withStyles(styles)(ContactUs);

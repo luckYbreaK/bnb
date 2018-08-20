@@ -5,7 +5,16 @@ import {
     Card,
     CardHeader,
     CardMedia,
+    Divider
 } from "@material-ui/core";
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = {
+    title: {
+        fontFamily: 'Niconne, cursive',
+        fontSize: '2.0rem'
+    }
+};
 
 
 class Checkout extends Component {
@@ -47,7 +56,7 @@ class Checkout extends Component {
     }
 
     render() {
-
+        let { classes } = this.props
         let { REACT_APP_PUB_KEY } = process.env;
         let total = this.state.cart.length !== 0 ? this.getTotal() : null
         return (
@@ -56,7 +65,9 @@ class Checkout extends Component {
                     <Card style={{ maxWidth: 400, borderRadius: 0 }}>
                         <CardHeader
                             title="Checkout"
+                            classes={{title: classes.title}}
                         />
+                        <Divider style={{height: ".25em"}}/>
                         <CardMedia
                             style={{ height: 0, paddingTop: '56.25%' }}
                             image="/img.1/castlecreekExterior/buildingFront.jpeg"
@@ -76,10 +87,12 @@ class Checkout extends Component {
                     <CardHeader
                         title="Thank you for your reservation."
                         subheader="We look forward to seeing you!"
+                        classes={{title: classes.title}}
                     />
+                    <Divider style={{height: ".25em"}}/>
                 </Card>
         );
     }
 }
 
-export default Checkout;
+export default withStyles(styles)(Checkout);

@@ -1,15 +1,11 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import axios from "axios";
 import { connect } from "react-redux";
 
 import { updateSuites } from "../../ducks/reducer";
-import Card from "../Card/Card";
-
-
-import "./Home.css";
-
+import HomeContent from "../HomeContent/HomeContent";
 // Imports a local file with the images
-const context = require.context("../../img/card", true, /\.(jpg)$/);
+const context = require.context("../../../public/img.1/card", true, /\.(jpg)$/);
 const regex = /\b[A-Za-z]+/;
 
 class Home extends Component {
@@ -35,22 +31,15 @@ class Home extends Component {
 
     render() {
         return (
-            <div className="home_container">
-                <div className="card_container">
-                    <Card />
-                </div>
-                <div className="specials_container">
-                    Specials
-                </div>
-                <div className="card_container">
-                    Castle Creek Img
-                </div>
-                <div>
-                    Castle Creek Info
-                </div>
-            </div>
+            this.props.suites ? <HomeContent /> : "" 
         );
     }
 }
 
-export default connect(null, { updateSuites })(Home);
+function mapStateToProps(state) {
+    return {
+        suites: state.suites
+    }
+}
+
+export default connect(mapStateToProps, { updateSuites })(Home);

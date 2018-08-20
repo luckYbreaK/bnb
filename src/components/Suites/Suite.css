@@ -10,6 +10,10 @@
 	z-index: 2;
 }
 
+/* .rcs_sliderSet {
+	max-width: 420px;
+} */
+
 SuiteModal {
     z-index: 3000 !important;
 }

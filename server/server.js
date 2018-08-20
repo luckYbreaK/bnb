@@ -83,9 +83,9 @@ app.post("/api/sendEmail", (req, res) => {
     transport.use('compile', inlineCss());
 
     let mailOptions = {
-        from: "BNB.com <gskhrvat@gmail.com>",
+        from: `${name} <gskhrvat@gmail.com>`,
         to: to,
-        subject: `!Important Message From ${name}`,
+        subject: `Important Message From ${name}, via Contact Us!`,
         html: `<h1 style="color: purple">Contact Info:</h1><p style="color: blue">Name: ${name}</p><p style="color: red">Email: ${email}</p><p style="color: green">Phone: ${phone}</p></br><h1 style="color: purple">Message: </h1><p>${message}</p>`
     };
 

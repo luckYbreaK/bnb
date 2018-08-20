@@ -2,11 +2,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Modal from '@material-ui/core/Modal';
-import Button from '@material-ui/core/Button';
-
-// import "./SuiteModal.css"
+import { Typography, Modal, Button, Divider, List, ListItem, ListItemText } from '@material-ui/core';
 
 function getModalStyle() {
     const top = 50
@@ -23,13 +19,16 @@ const styles = theme => ({
     paper: {
         position: 'absolute',
         width: '300px',
-        // maxWidth: '300px',
         height: '300px',
         backgroundColor: theme.palette.background.paper,
         boxShadow: theme.shadows[5],
         padding: theme.spacing.unit * 4,
         overflowY: "auto"
     },
+    title: {
+        fontFamily: 'Niconne, cursive',
+        fontSize: '2.0rem'
+    }
 });
 
 class SuiteModal extends Component {
@@ -62,16 +61,13 @@ class SuiteModal extends Component {
 
         return (
             <div>
-                {/* <Typography gutterBottom>Click to get the full Modal experience!</Typography>
-        <Button onClick={this.handleOpen}>Open Modal</Button> */}
                 <Modal
                     open={open}
                     onClose={() => handleClose({})}
-
                 >
                     <div style={getModalStyle()} className={classes.paper}>
-                        <Typography variant="title" id="modal-title" align="center" gutterBottom>
-                            {selectedSuite.title}
+                        <Typography variant="title" id="modal-title" align="center" gutterBottom className={classes.title}>
+                            {selectedSuite.title}                    
                         </Typography>
                         <div>
                             <img
@@ -93,24 +89,30 @@ class SuiteModal extends Component {
                             </Link>
                         </div>
                         <div style={{ display: "flex", justifyContent: "space-between" }}>
-                            <Typography variant="body2" id="modal-weekday">
+                            <Typography variant="subheading" id="modal-weekday" color="secondary" style={{fontWeight: 'bold'}}>
                                 Mon - Thur: ${selectedSuite.weekday_price}
                             </Typography>
-                            <Typography variant="body2" id="modal-weekend">
+                            <Typography variant="subheading" id="modal-weekend" color="secondary" style={{fontWeight: 'bold'}}>
                                 Fri - Sat: ${selectedSuite.weekend_price}
                             </Typography>
                         </div>
                         <Typography variant="body2" id="modal-description" gutterBottom>
                             {selectedSuite.description}
                         </Typography>
-                        <Typography variant="body2" id="modal-features">
+                        <Divider style={{height: ".25em"}}/>
+                        <Typography variant="subheading" id="modal-features" color="secondary" style={{fontWeight: 'bold'}}>
                             {selectedSuite.title} features:
                         </Typography>
+                        <List>
                         {truthyKeys.map((key, i) => (
-                            <Typography variant="body2" key={i}>
-                                *{key}
-                            </Typography>
+                            // <Typography variant="body2" key={i}>
+                            //     *{key}
+                            // </Typography>
+                            <ListItem disableGutters dense>
+                                <ListItemText inset primary={key} />
+                            </ListItem>
                         ))}
+                        </List>
                         <Typography variant="body2" id="modal-price">
                             *All guest room prices are subject to change.
                         </Typography>
