@@ -11,9 +11,17 @@ import {
     CardMedia,
     CardHeader
 } from "@material-ui/core";
+import { withStyles } from '@material-ui/core/styles';
 
 import AlertDialog from "../AlertDialog/AlertDialog";
 import { updateCart } from "../../ducks/reducer";
+
+const styles = {
+    title: {
+        fontFamily: 'Niconne, cursive',
+        fontSize: '2.0rem'
+    }
+};
 
 class Reservations2 extends Component {
     constructor() {
@@ -87,6 +95,7 @@ class Reservations2 extends Component {
     }
 
     render() {
+        let { classes } = this.props
         // const RESERVATIONS = [moment(), moment().add(10, 'days')];
         const RESERVATIONS = [];
         this.state.reservedDates.forEach(dateRange => {
@@ -108,6 +117,7 @@ class Reservations2 extends Component {
                         <CardHeader
                             title={this.props.selectedSuite.title}
                             subheader="Selected Suite: "
+                            classes={{title: classes.title}}
                         />
                         <CardMedia
                             style={{ height: 0, paddingTop: '56.25%' }}
@@ -169,4 +179,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { updateCart })(Reservations2);
+export default withStyles(styles)(connect(mapStateToProps, { updateCart })(Reservations2));

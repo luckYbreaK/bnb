@@ -85,7 +85,7 @@ class Nav extends Component {
                     </Typography>
                         </div>
 
-                        <IconButton onClick={this.toggleDrawer}>
+                        <IconButton onClick={this.toggleDrawer} color="secondary">
                             <Menu style={{ fontSize: '40px' }}/>
                             <Drawer
                                 anchor="right"

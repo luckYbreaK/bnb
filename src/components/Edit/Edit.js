@@ -11,9 +11,17 @@ import {
     CardMedia,
     CardHeader
 } from "@material-ui/core";
+import { withStyles } from '@material-ui/core/styles';
 
 import AlertDialog from "../AlertDialog/AlertDialog";
 import { updateCart } from "../../ducks/reducer";
+
+const styles = {
+    title: {
+        fontFamily: 'Niconne, cursive',
+        fontSize: '2.0rem'
+    }
+};
 
 class Reservations2 extends Component {
     constructor() {
@@ -76,6 +84,7 @@ class Reservations2 extends Component {
     }
 
     render() {
+        let { classes } = this.props
         const RESERVATIONS = [moment(), moment().add(10, 'days')];
         const isDayBlocked = day => RESERVATIONS.filter(moment => moment.isSame(day, 'day')).length > 0;
         // let day = moment("2018-08-10").add(5, 'd');
@@ -88,6 +97,7 @@ class Reservations2 extends Component {
                         <CardHeader
                             title="Edit Suite: "
                             subheader={this.props.suiteToEdit.title}
+                            classes={{title: classes.title}}
                         />
                         <CardHeader
                             subheader={`Current Dates: ${moment(this.props.suiteToEdit.startDate).format("MM/DD/YYYY")}-${moment(this.props.suiteToEdit.endDate).format("MM/DD/YYYY")}`}
@@ -151,4 +161,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { updateCart })(Reservations2);
+export default withStyles(styles)(connect(mapStateToProps, { updateCart })(Reservations2));

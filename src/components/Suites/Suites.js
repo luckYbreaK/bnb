@@ -8,6 +8,7 @@ import {
     CardActions,
     CardHeader
 } from "@material-ui/core";
+import { withStyles } from '@material-ui/core/styles';
 
 import { updateSelectedSuite, updateSuites } from "../../ducks/reducer";
 import SuiteModal from "../SuiteModal/SuiteModal";
@@ -15,6 +16,13 @@ import "./Suite.css";
 // Imports a local file with the images
 const context = require.context("../../../public/img.1/card", true, /\.(jpg)$/);
 const regex = /\b[A-Za-z]+/;
+
+const styles = {
+    title: {
+        fontFamily: 'Niconne, cursive',
+        fontSize: '2.0rem'
+    }
+};
 
 class Suites extends Component {
     constructor() {
@@ -58,7 +66,7 @@ class Suites extends Component {
     };
 
     render() {
-        let { suites } = this.props;
+        let { suites, classes } = this.props;
 
         let mappedSuites = suites.map((suite, i) =>
             <div key={i}>
@@ -66,6 +74,7 @@ class Suites extends Component {
 
                     <CardHeader
                         title={suite.title}
+                        classes={{title: classes.title}}
                     />
                     <img src={suite.img} alt="" />
                     <CardActions style={{ justifyContent: "center" }}>
@@ -107,6 +116,7 @@ class Suites extends Component {
         }
 
         return (
+            
             this.props.suites ?
             <div>
 
@@ -139,4 +149,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { updateSelectedSuite, updateSuites })(Suites);
+export default withStyles(styles)(connect(mapStateToProps, { updateSelectedSuite, updateSuites })(Suites));

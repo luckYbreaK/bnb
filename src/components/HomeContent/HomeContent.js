@@ -9,9 +9,18 @@ import {
     CardActions,
     CardHeader
 } from "@material-ui/core";
+import { withStyles } from '@material-ui/core/styles';
 
 import { updateSelectedSuite } from "../../ducks/reducer";
 import SuiteModal from "../SuiteModal/SuiteModal";
+import "./HomeContent.css"
+
+const styles = {
+    title: {
+        fontFamily: 'Niconne, cursive',
+        fontSize: '2.0rem'
+    }
+};
 
 class HomeContent extends Component {
     constructor() {
@@ -36,7 +45,7 @@ class HomeContent extends Component {
     };
 
     render() {
-        let { suites } = this.props
+        let { suites, classes } = this.props
         let suite = suites[6] ? suites[6] : "";
 
         return (
@@ -47,6 +56,8 @@ class HomeContent extends Component {
                         <CardHeader
                             title={suite.title}
                             subheader="Featured Suite"
+                            color="primary"
+                            classes={{title: classes.title}}
                         />
                         <CardMedia
                             style={{ height: 0, paddingTop: '56.25%' }}
@@ -54,9 +65,9 @@ class HomeContent extends Component {
                             title={suite.title}
                         />
                         <CardActions style={{ justifyContent: "center" }}>
-                            <div style={{ backgroundColor: 'rgb(117, 117, 117)', width: "100%", display: "flex", justifyContent: "center", margin: "-70px 20px 0 20px", opacity: "0.6", borderRadius: "5px"}}>
+                            <div style={{ backgroundColor: 'rgb(117, 117, 117)', width: "100%", display: "flex", justifyContent: "center", margin: "-70px 20px 0 20px", opacity: "0.6", borderRadius: "5px" }}>
                                 <Button
-                                    style={{color: "white"}}
+                                    style={{ color: "white" }}
                                     onClick={() => this.handleOpen(suite)}
                                 >
                                     View Details
@@ -69,7 +80,7 @@ class HomeContent extends Component {
                 <div>
                     <Card style={{ maxWidth: 420, borderRadius: 0 }}>
                         <CardContent>
-                            <Typography gutterBottom variant="headline" component="h2">
+                            <Typography gutterBottom variant="title" component="h2" classes={{title: classes.title}}>
                                 Specials
                             </Typography>
                         </CardContent>
@@ -81,6 +92,7 @@ class HomeContent extends Component {
                         <CardHeader
                             title="The Castle on the Creek"
                             subheader="A Royal Experience"
+                            classes={{title: classes.title}}
                         />
                         <CardMedia
                             style={{ height: 0, paddingTop: '56.25%', backgroundPosition: "center top" }}
@@ -149,4 +161,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default connect(mapStateToProps, { updateSelectedSuite })(HomeContent);
+export default withStyles(styles)(connect(mapStateToProps, { updateSelectedSuite })(HomeContent));

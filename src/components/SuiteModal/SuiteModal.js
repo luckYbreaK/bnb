@@ -25,6 +25,10 @@ const styles = theme => ({
         padding: theme.spacing.unit * 4,
         overflowY: "auto"
     },
+    title: {
+        fontFamily: 'Niconne, cursive',
+        fontSize: '2.0rem'
+    }
 });
 
 class SuiteModal extends Component {
@@ -62,8 +66,8 @@ class SuiteModal extends Component {
                     onClose={() => handleClose({})}
                 >
                     <div style={getModalStyle()} className={classes.paper}>
-                        <Typography variant="title" id="modal-title" align="center" gutterBottom>
-                            {selectedSuite.title}
+                        <Typography variant="title" id="modal-title" align="center" gutterBottom className={classes.title}>
+                            {selectedSuite.title}                    
                         </Typography>
                         <div>
                             <img
@@ -85,17 +89,17 @@ class SuiteModal extends Component {
                             </Link>
                         </div>
                         <div style={{ display: "flex", justifyContent: "space-between" }}>
-                            <Typography variant="body2" id="modal-weekday">
+                            <Typography variant="subheading" id="modal-weekday" color="secondary" style={{fontWeight: 'bold'}}>
                                 Mon - Thur: ${selectedSuite.weekday_price}
                             </Typography>
-                            <Typography variant="body2" id="modal-weekend">
+                            <Typography variant="subheading" id="modal-weekend" color="secondary" style={{fontWeight: 'bold'}}>
                                 Fri - Sat: ${selectedSuite.weekend_price}
                             </Typography>
                         </div>
                         <Typography variant="body2" id="modal-description" gutterBottom>
                             {selectedSuite.description}
                         </Typography>
-                        <Typography variant="body2" id="modal-features">
+                        <Typography variant="subheading" id="modal-features" color="secondary" style={{fontWeight: 'bold'}}>
                             {selectedSuite.title} features:
                         </Typography>
                         {truthyKeys.map((key, i) => (

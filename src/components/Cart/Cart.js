@@ -13,10 +13,18 @@ import {
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
+import { withStyles } from '@material-ui/core/styles';
 
 import AlertDialog from "../AlertDialog/AlertDialog";
 import FormDialog from "../FormDialog/FormDialog";
 import { selectSuiteToEdit } from "../../ducks/reducer";
+
+const styles = {
+    title: {
+        fontFamily: 'Niconne, cursive',
+        fontSize: '2.0rem'
+    }
+};
 
 class Cart extends Component {
     constructor() {
@@ -127,6 +135,7 @@ class Cart extends Component {
     }
 
     render() {
+        let { classes } = this.props
         let mappedCart = this.state.cart.map((item, i) => {
             return (
                 <div key={i}>
@@ -134,6 +143,7 @@ class Cart extends Component {
                         <CardHeader
                             title={item.title}
                             subheader={`${moment(item.startDate).format("MM/DD/YYYY")}-${moment(item.endDate).format("MM/DD/YYYY")}`}
+                            classes={{title: classes.title}}
                         />
                         <CardMedia
                             style={{ height: 0, paddingTop: '56.25%' }}
@@ -170,6 +180,7 @@ class Cart extends Component {
                     <Card style={{ maxWidth: 400, borderRadius: 0 }}>
                         <CardHeader
                             title="Your Shopping Cart is empty."
+                            classes={{title: classes.title}}
                         />
                     </Card>
                 </div>
@@ -178,6 +189,7 @@ class Cart extends Component {
                     <Card style={{ maxWidth: 400, borderRadius: 0 }}>
                         <CardHeader
                             title="Shopping Cart"
+                            classes={{title: classes.title}}
                         />
                     </Card>
                     <div>
@@ -187,6 +199,7 @@ class Cart extends Component {
                         <CardHeader
                             title="Total:"
                             subheader={`$${this.getTotal()}`}
+                            classes={{title: classes.title}}
                         />
                     </Card>
                     <div style={{ display: "flex", justifyContent: "center" }}>
@@ -222,4 +235,4 @@ class Cart extends Component {
     }
 }
 
-export default connect(null, { selectSuiteToEdit })(Cart);
+export default withStyles(styles)(connect(null, { selectSuiteToEdit })(Cart));

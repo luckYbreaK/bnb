@@ -1,10 +1,18 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { TextField, Card, CardHeader, Button } from "@material-ui/core";
+import { withStyles } from '@material-ui/core/styles';
 
 import AlertDialog from "../AlertDialog/AlertDialog";
 
-export default class ContactUs extends Component {
+const styles = {
+    title: {
+        fontFamily: 'Niconne, cursive',
+        fontSize: '2.0rem'
+    }
+};
+
+class ContactUs extends Component {
     constructor() {
         super();
 
@@ -54,11 +62,12 @@ export default class ContactUs extends Component {
     }
 
     render() {
+        let { classes } = this.props
         return (
             <div>
                 <Card style={{ maxWidth: 400, borderRadius: 0 }}>
                     <Card style={{ maxWidth: 400, borderRadius: 0 }}>
-                        <CardHeader title="Get in touch with us" />
+                        <CardHeader title="Get in touch with us" classes={{title: classes.title}}/>        
                     </Card>
                     <div style={{ display: "flex", flexDirection: "column", padding: "0 30px", marginBottom: "50px" }}>
                         <TextField
@@ -117,3 +126,5 @@ export default class ContactUs extends Component {
         );
     }
 }
+
+export default withStyles(styles)(ContactUs);
