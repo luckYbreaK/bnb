@@ -101,7 +101,7 @@ class Reservations2 extends Component {
             <div>
 
                 <div>
-                    <Card style={{ maxWidth: 400, borderRadius: 0 }}>
+                    <Card style={{ maxWidth: 420, borderRadius: 0 }}>
                         <CardHeader
                             title="Edit Suite: "
                             subheader={this.props.suiteToEdit.title}

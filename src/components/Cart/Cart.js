@@ -146,7 +146,7 @@ class Cart extends Component {
         let mappedCart = this.state.cart.map((item, i) => {
             return (
                 <div key={i}>
-                    <Card style={{ maxWidth: 400, borderRadius: 0 }}>
+                    <Card style={{ maxWidth: 420, borderRadius: 0 }}>
                         <CardHeader
                             title={item.title}
                             subheader={`${moment(item.startDate).format("MM/DD/YYYY")}   -   ${moment(item.endDate).format("MM/DD/YYYY")}`}
@@ -187,7 +187,7 @@ class Cart extends Component {
         return (
             this.state.cart.length === 0 ?
                 <div>
-                    <Card style={{ maxWidth: 400, borderRadius: 0 }}>
+                    <Card style={{ maxWidth: 420, borderRadius: 0 }}>
                         <CardHeader
                             title="Your Shopping Cart is empty."
                             classes={{ title: classes.title }}
@@ -197,7 +197,7 @@ class Cart extends Component {
                 </div>
                 :
                 <div>
-                    <Card style={{ maxWidth: 400, borderRadius: 0 }}>
+                    <Card style={{ maxWidth: 420, borderRadius: 0 }}>
                         <CardHeader
                             title="Shopping Cart"
                             classes={{ title: classes.title }}
@@ -207,7 +207,7 @@ class Cart extends Component {
                     <div>
                         {mappedCart}
                     </div>
-                    <Card style={{ maxWidth: 400, borderRadius: 0 }}>
+                    <Card style={{ maxWidth: 420, borderRadius: 0 }}>
                         <CardHeader
                             title="Total:"
                             subheader={`$${this.getTotal()}`}

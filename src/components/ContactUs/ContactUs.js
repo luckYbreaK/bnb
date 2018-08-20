@@ -68,8 +68,8 @@ class ContactUs extends Component {
         let { classes } = this.props
         return (
             <div>
-                <Card style={{ maxWidth: 400, borderRadius: 0 }}>
-                    <Card style={{ maxWidth: 400, borderRadius: 0 }}>
+                <Card style={{ maxWidth: 420, borderRadius: 0 }}>
+                    <Card style={{ maxWidth: 420, borderRadius: 0 }}>
                         <CardHeader title="Get in touch with us" classes={{title: classes.title}}/>        
                     </Card>
                     <Divider style={{height: ".25em"}}/>

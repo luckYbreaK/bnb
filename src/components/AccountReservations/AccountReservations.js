@@ -62,7 +62,7 @@ class AccountReservations extends Component {
         let reservations = this.state.reservations.map((reservation, i) => {
             return (
                 <div key={i}>
-                    <Card style={{ maxWidth: 400, borderRadius: 0 }}>
+                    <Card style={{ maxWidth: 420, borderRadius: 0 }}>
                         <CardHeader
                             title={reservation.title}
                             subheader={`${moment(reservation.arrival_date).format("MM/DD/YYYY")} - ${moment(reservation.departure_date).format("MM/DD/YYYY")}`}
@@ -83,7 +83,7 @@ class AccountReservations extends Component {
         return (
             this.state.reservations.length === 0 ?
                 <div>
-                    <Card style={{ maxWidth: 400, borderRadius: 0 }}>
+                    <Card style={{ maxWidth: 420, borderRadius: 0 }}>
                         <CardHeader
                             title="You Don't Have Any Reservations :("
                             classes={{title: classes.title}}
@@ -93,7 +93,7 @@ class AccountReservations extends Component {
                 </div>
                 :
                 <div>
-                    <Card style={{ maxWidth: 400, borderRadius: 0 }}>
+                    <Card style={{ maxWidth: 420, borderRadius: 0 }}>
                         <CardHeader
                             title="Reservations"
                             classes={{title: classes.title}}

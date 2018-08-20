@@ -62,7 +62,7 @@ class Checkout extends Component {
         return (
             total ?
                 <div>
-                    <Card style={{ maxWidth: 400, borderRadius: 0 }}>
+                    <Card style={{ maxWidth: 420, borderRadius: 0 }}>
                         <CardHeader
                             title="Checkout"
                             classes={{title: classes.title}}
@@ -83,7 +83,7 @@ class Checkout extends Component {
                     </div>
                 </div>
                 :
-                <Card style={{ maxWidth: 400, borderRadius: 0 }}>
+                <Card style={{ maxWidth: 420, borderRadius: 0 }}>
                     <CardHeader
                         title="Thank you for your reservation."
                         subheader="We look forward to seeing you!"
