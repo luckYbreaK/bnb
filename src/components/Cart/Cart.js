@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import axios from "axios";
 import moment from "moment";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import {
     Card,
     CardContent,
@@ -9,7 +9,8 @@ import {
     CardMedia,
     Typography,
     Button,
-    IconButton
+    IconButton,
+    Divider
 } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
@@ -23,6 +24,11 @@ const styles = {
     title: {
         fontFamily: 'Niconne, cursive',
         fontSize: '2.0rem'
+    },
+    subheader: {
+        color: "#12582f",
+        fontWeight: "bold",
+        fontSize: '1.25rem'
     }
 };
 
@@ -61,15 +67,15 @@ class Cart extends Component {
 
     handleCheckout() {
         axios.get("/api/userData").then(res => {
-            
+
             let { data } = res;
             if (!data.email) {
                 this.handleClickOpen();
-            } else if(!data.firstName || !data.lastName || !data.email || !data.phone){
-                    this.handleFormOpen();
+            } else if (!data.firstName || !data.lastName || !data.email || !data.phone) {
+                this.handleFormOpen();
             } else {
                 this.props.history.push("/checkout");
-                
+
             }
         })
     }
@@ -122,7 +128,8 @@ class Cart extends Component {
     };
 
     handleSubmit(id, email, phone, firstName, lastName) {
-        axios.put(`/api/updateUserInfo/${id}`, {user: 
+        axios.put(`/api/updateUserInfo/${id}`, {
+            user:
             {
                 firstName: this.state.firstName ? this.state.firstName : firstName,
                 lastName: this.state.lastName ? this.state.lastName : lastName,
@@ -142,8 +149,8 @@ class Cart extends Component {
                     <Card style={{ maxWidth: 400, borderRadius: 0 }}>
                         <CardHeader
                             title={item.title}
-                            subheader={`${moment(item.startDate).format("MM/DD/YYYY")}-${moment(item.endDate).format("MM/DD/YYYY")}`}
-                            classes={{title: classes.title}}
+                            subheader={`${moment(item.startDate).format("MM/DD/YYYY")}   -   ${moment(item.endDate).format("MM/DD/YYYY")}`}
+                            classes={{ title: classes.title, subheader: classes.subheader }}
                         />
                         <CardMedia
                             style={{ height: 0, paddingTop: '56.25%' }}
@@ -154,22 +161,25 @@ class Cart extends Component {
                             <Typography style={{ display: "flex", justifyContent: "space-between" }}>
                                 Price: ${item.total}
                                 <Fragment>
-                                    <IconButton
-                                        style={{ marginTop: "-16px" }}
-                                        onClick={() => this.handleEdit(item)}
-                                    >
-                                        <EditIcon />
-                                    </IconButton>
-                                    <IconButton
-                                        style={{ marginTop: "-16px" }}
-                                        onClick={() => this.deleteItemFromCart(item.id)}
-                                    >
-                                        <DeleteIcon />
-                                    </IconButton>
+                                    <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                                        <IconButton
+                                            style={{ marginTop: "-16px", color: "#12582f" }}
+                                            onClick={() => this.handleEdit(item)}
+                                        >
+                                            <EditIcon />
+                                        </IconButton>
+                                        <IconButton
+                                            style={{ marginTop: "-16px", color: "#12582f" }}
+                                            onClick={() => this.deleteItemFromCart(item.id)}
+                                        >
+                                            <DeleteIcon />
+                                        </IconButton>
+                                    </div>
                                 </Fragment>
                             </Typography>
                         </CardContent>
                     </Card>
+                    <Divider style={{height: ".25em"}}/>
                 </div>
             );
         });
@@ -180,18 +190,20 @@ class Cart extends Component {
                     <Card style={{ maxWidth: 400, borderRadius: 0 }}>
                         <CardHeader
                             title="Your Shopping Cart is empty."
-                            classes={{title: classes.title}}
+                            classes={{ title: classes.title }}
                         />
                     </Card>
+                    <Divider style={{height: ".25em"}}/>
                 </div>
                 :
                 <div>
                     <Card style={{ maxWidth: 400, borderRadius: 0 }}>
                         <CardHeader
                             title="Shopping Cart"
-                            classes={{title: classes.title}}
+                            classes={{ title: classes.title }}
                         />
                     </Card>
+                    <Divider style={{height: ".25em"}}/>
                     <div>
                         {mappedCart}
                     </div>
@@ -199,7 +211,7 @@ class Cart extends Component {
                         <CardHeader
                             title="Total:"
                             subheader={`$${this.getTotal()}`}
-                            classes={{title: classes.title}}
+                            classes={{ title: classes.title, subheader: classes.subheader }}
                         />
                     </Card>
                     <div style={{ display: "flex", justifyContent: "center" }}>

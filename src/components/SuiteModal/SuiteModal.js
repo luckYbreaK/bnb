@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import { Typography, Modal, Button } from '@material-ui/core';
+import { Typography, Modal, Button, Divider, List, ListItem, ListItemText } from '@material-ui/core';
 
 function getModalStyle() {
     const top = 50
@@ -99,14 +99,20 @@ class SuiteModal extends Component {
                         <Typography variant="body2" id="modal-description" gutterBottom>
                             {selectedSuite.description}
                         </Typography>
+                        <Divider style={{height: ".25em"}}/>
                         <Typography variant="subheading" id="modal-features" color="secondary" style={{fontWeight: 'bold'}}>
                             {selectedSuite.title} features:
                         </Typography>
+                        <List>
                         {truthyKeys.map((key, i) => (
-                            <Typography variant="body2" key={i}>
-                                *{key}
-                            </Typography>
+                            // <Typography variant="body2" key={i}>
+                            //     *{key}
+                            // </Typography>
+                            <ListItem disableGutters dense>
+                                <ListItemText inset primary={key} />
+                            </ListItem>
                         ))}
+                        </List>
                         <Typography variant="body2" id="modal-price">
                             *All guest room prices are subject to change.
                         </Typography>

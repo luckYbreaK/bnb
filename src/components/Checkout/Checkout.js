@@ -5,6 +5,7 @@ import {
     Card,
     CardHeader,
     CardMedia,
+    Divider
 } from "@material-ui/core";
 import { withStyles } from '@material-ui/core/styles';
 
@@ -66,6 +67,7 @@ class Checkout extends Component {
                             title="Checkout"
                             classes={{title: classes.title}}
                         />
+                        <Divider style={{height: ".25em"}}/>
                         <CardMedia
                             style={{ height: 0, paddingTop: '56.25%' }}
                             image="/img.1/castlecreekExterior/buildingFront.jpeg"
@@ -87,6 +89,7 @@ class Checkout extends Component {
                         subheader="We look forward to seeing you!"
                         classes={{title: classes.title}}
                     />
+                    <Divider style={{height: ".25em"}}/>
                 </Card>
         );
     }

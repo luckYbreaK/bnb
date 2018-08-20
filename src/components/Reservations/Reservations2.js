@@ -20,6 +20,9 @@ const styles = {
     title: {
         fontFamily: 'Niconne, cursive',
         fontSize: '2.0rem'
+    },
+    subheader: {
+        color: "#12582f"
     }
 };
 
@@ -117,7 +120,7 @@ class Reservations2 extends Component {
                         <CardHeader
                             title={this.props.selectedSuite.title}
                             subheader="Selected Suite: "
-                            classes={{title: classes.title}}
+                            classes={{title: classes.title, subheader: classes.subheader}}
                         />
                         <CardMedia
                             style={{ height: 0, paddingTop: '56.25%' }}

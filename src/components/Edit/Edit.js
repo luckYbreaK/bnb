@@ -20,6 +20,14 @@ const styles = {
     title: {
         fontFamily: 'Niconne, cursive',
         fontSize: '2.0rem'
+    },
+    subheader1: {
+        color: "#12582f",
+    },
+    subheader2: {
+        color: "#12582f",
+        fontWeight: "bold",
+        fontSize: '1.25rem'
     }
 };
 
@@ -62,10 +70,10 @@ class Reservations2 extends Component {
             editsToSuite.startDate = this.state.startDate;
             editsToSuite.endDate = this.state.endDate;
             editsToSuite.total = this.calcTotal(this.state.startDate, this.state.endDate, this.props.suiteToEdit);
-            axios.put(`/api/updateItemInCart/${editsToSuite.id}`, {suite: editsToSuite}).then(res => {
+            axios.put(`/api/updateItemInCart/${editsToSuite.id}`, { suite: editsToSuite }).then(res => {
                 this.props.history.push("/cart");
             });
-            
+
         } else {
             this.handleClickOpen();
         }
@@ -97,10 +105,11 @@ class Reservations2 extends Component {
                         <CardHeader
                             title="Edit Suite: "
                             subheader={this.props.suiteToEdit.title}
-                            classes={{title: classes.title}}
+                            classes={{ title: classes.title, subheader: classes.subheader1 }}
                         />
                         <CardHeader
-                            subheader={`Current Dates: ${moment(this.props.suiteToEdit.startDate).format("MM/DD/YYYY")}-${moment(this.props.suiteToEdit.endDate).format("MM/DD/YYYY")}`}
+                            subheader={`Current Dates:    ${moment(this.props.suiteToEdit.startDate).format("MM/DD/YYYY")}   -   ${moment(this.props.suiteToEdit.endDate).format("MM/DD/YYYY")}`}
+                            classes={{ subheader: classes.subheader2 }}
                         />
                         <CardMedia
                             style={{ height: 0, paddingTop: '56.25%' }}
@@ -111,14 +120,14 @@ class Reservations2 extends Component {
                 </div>
 
                 <div style={{ display: "flex", justifyContent: "center" }}>
-                        <Button
-                            onClick={this.editSuiteInCart}
-                            color="primary"
-                            variant="contained"
-                            size="small"
-                            style={{ marginTop: "-20px", textDecoration: "none" }}
-                        >
-                            Change Dates
+                    <Button
+                        onClick={this.editSuiteInCart}
+                        color="primary"
+                        variant="contained"
+                        size="small"
+                        style={{ marginTop: "-20px", textDecoration: "none" }}
+                    >
+                        Change Dates
                         </Button>
                 </div>
 

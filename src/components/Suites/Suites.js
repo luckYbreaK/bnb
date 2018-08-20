@@ -74,19 +74,19 @@ class Suites extends Component {
 
                     <CardHeader
                         title={suite.title}
-                        classes={{title: classes.title}}
+                        classes={{ title: classes.title }}
                     />
-                    <img src={suite.img} alt="" />
+                    <img src={suite.img} alt="" onClick={() => this.handleOpen(suite)}/>
                     <CardActions style={{ justifyContent: "center" }}>
-                            <div style={{ backgroundColor: 'rgb(117, 117, 117)', width: "100%", display: "flex", justifyContent: "center", margin: "-70px 20px 0 20px", opacity: "0.6", borderRadius: "5px"}}>
-                                <Button
-                                    style={{color: "white"}}
-                                    onClick={() => this.handleOpen(suite)}
-                                >
-                                    View Details
+                        <div style={{ backgroundColor: 'rgb(117, 117, 117)', width: "100%", display: "flex", justifyContent: "center", margin: "-70px 20px 0 20px", opacity: "0.6", borderRadius: "5px" }}>
+                            <Button
+                                style={{ color: "white" }}
+                                onClick={() => this.handleOpen(suite)}
+                            >
+                                View Details
                                 </Button>
-                            </div>
-                        </CardActions>
+                        </div>
+                    </CardActions>
                 </Card>
             </div>
         );
@@ -95,11 +95,18 @@ class Suites extends Component {
             circular: false
         };
         let dotsSetting = {
-            placeOn: "beneath"
+            placeOn: "beneath",
+            style: {
+                currDotColor: "#12582f"
+            }
         }
 
         let buttonSetting = {
             placeOn: "bottom-beneath",
+            style: {
+                left: { background: "#4527A0" },
+                right: { background: "#4527A0" }
+            }
             // hoverEvent: true
         }
 
@@ -116,28 +123,28 @@ class Suites extends Component {
         }
 
         return (
-            
+
             this.props.suites ?
-            <div>
+                <div>
 
-                <CarouselSlider
-                    slideCpnts={mappedSuites}
-                    manner={manner}
-                    dotsSetting={dotsSetting}
-                    buttonSetting={buttonSetting}
-                    sliderBoxStyle={sliderBoxStyle}
-                    itemStyle={itemStyle}
-                />
+                    <CarouselSlider
+                        slideCpnts={mappedSuites}
+                        manner={manner}
+                        dotsSetting={dotsSetting}
+                        buttonSetting={buttonSetting}
+                        sliderBoxStyle={sliderBoxStyle}
+                        itemStyle={itemStyle}
+                    />
 
-                <SuiteModal
-                    handleClose={this.handleClose}
-                    open={this.state.open}
-                    selectedSuite={this.props.selectedSuite}
-                />
+                    <SuiteModal
+                        handleClose={this.handleClose}
+                        open={this.state.open}
+                        selectedSuite={this.props.selectedSuite}
+                    />
 
-            </div>
-            :
-            ""
+                </div>
+                :
+                ""
         );
     }
 }

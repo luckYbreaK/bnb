@@ -16,9 +16,16 @@ import {
     ListItemIcon,
 } from "@material-ui/core";
 import { Menu, Hotel, ShoppingCart, AccountCircle } from '@material-ui/icons';
+import { withStyles } from '@material-ui/core/styles';
 
 import "./Nav.css";
 import { updateLoggedIn } from "../../ducks/reducer";
+
+const styles = {
+    paper: {
+        background: "#EDE7F6"
+    }
+};
 
 class Nav extends Component {
     constructor() {
@@ -68,6 +75,7 @@ class Nav extends Component {
     }
 
     render() {
+        let { classes } = this.props
         return (
             <div>
 
@@ -80,18 +88,19 @@ class Nav extends Component {
                                     <img src="img.1/logo/logo.png" alt="Castle Creek logo" />
                                 </Button>
                             </Link>
-                            <Typography align="center">
-                                801-000-0000
+                            <Typography align="center" style={{ color: "white" }}>
+                                (801) 567-9437
                     </Typography>
                         </div>
 
-                        <IconButton onClick={this.toggleDrawer} color="secondary">
-                            <Menu style={{ fontSize: '40px' }}/>
+                        <IconButton onClick={this.toggleDrawer} style={{ color: "white" }}>
+                            <Menu style={{ fontSize: '40px' }} />
                             <Drawer
                                 anchor="right"
                                 open={this.state.drawerOpen}
                                 onClose={this.toggleDrawer}
                                 transitionDuration={{ enter: 400, exit: 400 }}
+                                classes={{paper: classes.paper}}
                             >
                                 <div
                                     tabIndex={0}
@@ -165,4 +174,4 @@ function mapStateToProps(state) {
     }
 }
 
-export default withRouter(connect(mapStateToProps, { updateLoggedIn })(Nav));
+export default withStyles(styles)(withRouter(connect(mapStateToProps, { updateLoggedIn })(Nav)));

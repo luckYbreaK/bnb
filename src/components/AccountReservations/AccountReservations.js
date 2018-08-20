@@ -4,7 +4,8 @@ import moment from "moment";
 import {
     Card,
     CardHeader,
-    CardMedia
+    CardMedia,
+    Divider
 } from "@material-ui/core";
 import { withStyles } from '@material-ui/core/styles';
 
@@ -15,6 +16,11 @@ const styles = {
     title: {
         fontFamily: 'Niconne, cursive',
         fontSize: '2.0rem'
+    },
+    subheader: {
+        color: "#12582f",
+        fontWeight: "bold",
+        fontSize: '1.25rem'
     }
 };
 
@@ -59,8 +65,8 @@ class AccountReservations extends Component {
                     <Card style={{ maxWidth: 400, borderRadius: 0 }}>
                         <CardHeader
                             title={reservation.title}
-                            subheader={`${moment(reservation.arrival_date).format("MM/DD/YYYY")}-${moment(reservation.departure_date).format("MM/DD/YYYY")}`}
-                            classes={{title: classes.title}}
+                            subheader={`${moment(reservation.arrival_date).format("MM/DD/YYYY")} - ${moment(reservation.departure_date).format("MM/DD/YYYY")}`}
+                            classes={{title: classes.title, subheader: classes.subheader}}
                         />
                         <CardMedia
                             style={{ height: 0, paddingTop: '56.25%' }}
@@ -68,6 +74,7 @@ class AccountReservations extends Component {
                             title={reservation.title}
                         />
                     </Card>
+                    <Divider style={{height: ".25em"}}/>
                 </div>
             );
         });
@@ -82,6 +89,7 @@ class AccountReservations extends Component {
                             classes={{title: classes.title}}
                         />
                     </Card>
+                    <Divider style={{height: ".25em"}}/>
                 </div>
                 :
                 <div>
@@ -91,6 +99,7 @@ class AccountReservations extends Component {
                             classes={{title: classes.title}}
                         />
                     </Card>
+                    <Divider style={{height: ".25em"}}/>
                     <div>
                         {reservations}
                     </div>
