@@ -3,6 +3,7 @@ import routes from "./routes";
 import Nav from "./components/Nav/Nav";
 
 import "./reset.css";
+import "./App.css"
 
 class App extends Component {
   render() {
