@@ -18,15 +18,25 @@ import { withStyles } from '@material-ui/core/styles';
 
 import { updateSelectedSuite } from "../../ducks/reducer";
 import SuiteModal from "../SuiteModal/SuiteModal";
-import "./HomeContent.css"
+
+import "./HomeContent.css";
 
 const styles = {
+    root: {
+        borderRadius: 0
+    },
     title: {
         fontFamily: 'Niconne, cursive',
         fontSize: '2.0rem'
     },
     subheader: {
-        color: "#12582f"
+        color: "rgba(18, 88, 47, 1.0)"
+    },
+    paragraph: {
+        color: "rgba(51, 51, 51, 1.0)"
+    },
+    buttonText: {
+        color: "rgba(255, 255, 255, 0.6)"
     }
 };
 
@@ -38,19 +48,13 @@ class HomeContent extends Component {
             open: false,
         }
 
-        this.handleClose = this.handleClose.bind(this);
-        this.handleOpen = this.handleOpen.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
     }
 
-    handleOpen(suite) {
+    toggleModal(suite) {
         this.props.updateSelectedSuite(suite);
-        this.setState({ open: true });
-    };
-
-    handleClose(suite) {
-        this.props.updateSelectedSuite(suite);
-        this.setState({ open: false });
-    };
+        this.setState({ open: !this.state.open });
+    }
 
     render() {
         let { suites, classes } = this.props
@@ -60,7 +64,7 @@ class HomeContent extends Component {
             <div>
 
                 <div>
-                    <Card style={{ maxWidth: 420, borderRadius: 0 }}>
+                    <Card classes={{ root: classes.root }}>
                         <CardHeader
                             title={suite.title}
                             subheader="Featured Suite"
@@ -71,13 +75,13 @@ class HomeContent extends Component {
                             style={{ height: 0, paddingTop: '56.25%' }}
                             image={suite.img}
                             title={suite.title}
-                            onClick={() => this.handleOpen(suite)}
+                            onClick={() => this.toggleModal(suite)}
                         />
-                        <CardActions style={{ justifyContent: "center" }}>
-                            <div style={{ backgroundColor: 'rgb(117, 117, 117)', width: "100%", display: "flex", justifyContent: "center", margin: "-70px 20px 0 20px", opacity: "0.6", borderRadius: "5px" }}>
+                        <CardActions>
+                            <div id="btn">
                                 <Button
-                                    style={{ color: "white" }}
-                                    onClick={() => this.handleOpen(suite)}
+                                    classes={{ text: classes.buttonText }}
+                                    onClick={() => this.toggleModal(suite)}
                                 >
                                     View Details
                                 </Button>
@@ -87,7 +91,7 @@ class HomeContent extends Component {
                 </div>
                 <Divider style={{ height: ".25em" }} />
                 <div>
-                    <Card style={{ maxWidth: 420, borderRadius: 0 }}>
+                    <Card classes={{ root: classes.root }}>
                         <CardContent>
                             <Typography gutterBottom variant="title" component="h2" classes={{ title: classes.title }}>
                                 Specials
@@ -97,7 +101,7 @@ class HomeContent extends Component {
                 </div>
                 <Divider style={{ height: ".25em" }} />
                 <div>
-                    <Card style={{ maxWidth: 420, borderRadius: 0 }}>
+                    <Card classes={{ root: classes.root }}>
                         <CardHeader
                             title="The Castle on the Creek"
                             subheader="A Royal Experience"
@@ -115,7 +119,7 @@ class HomeContent extends Component {
                                 </Typography>
                             </ExpansionPanelSummary>
                             <ExpansionPanelDetails>
-                                <Typography component="p" gutterBottom>
+                                <Typography component="p" gutterBottom classes={{paragraph: classes.paragraph}}>
                                     Imagine you travel through time, back to a period of pristine elegance and sophistication, away from the tangled web of distraction and obligation that is modern life. You breathe a sigh of relief; the moment you’ve longed for, even dreamed of, has arrived. At last, you’re able to relax and unwind. Just as you think, “It doesn’t get any better than this!” you look around and realize: though you’ve left the stress of modern life behind, all your favorite modern conveniences somehow survived the space-time continuum unscathed. You blink in disbelief, but it’s true–everything made it safely! Cable, a flat-screen smart TV, high-speed Wi-Fi, online movies, a couples’ tub with jets and a romantic lighting system, they’re all here! In utter delight, you fall back on a remarkably comfortable bed, and sigh.
                             
                                 
@@ -157,7 +161,7 @@ class HomeContent extends Component {
                 </div>
 
                 <SuiteModal
-                    handleClose={this.handleClose}
+                    handleClose={this.toggleModal}
                     open={this.state.open}
                     selectedSuite={this.props.selectedSuite}
                 />

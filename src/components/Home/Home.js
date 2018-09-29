@@ -11,27 +11,33 @@ const regex = /\b[A-Za-z]+/;
 class Home extends Component {
 
     componentDidMount() {
-        let { updateSuites } = this.props;
-        axios.get("/api/suites").then(res => {
-            let addImgToSuites = res.data.map(suite => {
-                let updatedSuite = {};
+        let { suites, updateSuites } = this.props;
+        // If state in Redux store doesn't contain a list of suites
+        if (suites.length === 0) {
+            // Fetch entire list of suites
+            axios.get("/api/suites").then(res => {
+                // Add image to each suite object
+                let addImgToSuites = res.data.map(suite => {
+                    let updatedSuite = {};
 
-                context.keys().forEach(key => {
-                    if (suite.title.includes(key.match(regex)[0])) {
-                        updatedSuite = Object.assign({}, suite, { img: context(key) });
-                    }
-                });
+                    context.keys().forEach(key => {
+                        if (suite.title.includes(key.match(regex)[0])) {
+                            updatedSuite = Object.assign({}, suite, { img: context(key) });
+                        }
+                    });
 
-                return updatedSuite;
-            })
+                    return updatedSuite;
+                })
 
-            updateSuites(addImgToSuites);
-        });
+                // Put list of suites on state in Redux store
+                updateSuites(addImgToSuites);
+            });
+        }
     }
 
     render() {
         return (
-            this.props.suites ? <HomeContent /> : "" 
+            this.props.suites ? <HomeContent /> : null
         );
     }
 }

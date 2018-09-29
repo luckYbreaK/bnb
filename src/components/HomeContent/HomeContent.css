@@ -1,6 +1,12 @@
-@import url('https://fonts.googleapis.com/css?family=Niconne');
+#btn {
+    background-color: rgba(117, 117, 117, 0.6);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: -70px 20px 0 20px;
+    border-radius: 5px;
+}
 
-.trial {
-    font-family: 'Niconne', cursive;
-    font-size: 32px;
+Button {
+    color: rgba(255, 255, 255, 0.6)
 }

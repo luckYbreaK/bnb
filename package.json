@@ -41,7 +41,7 @@
   "main": "server/server.js",
   "proxy": {
     "/api": {
-      "target": "http://localhost:3030"
+      "target": "http://localhost:3040"
     },
     "/auth/callback": {
       "target": "http://localhost:3030"

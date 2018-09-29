@@ -1,5 +1,6 @@
 import React from "react";
 import {Switch, Route} from "react-router-dom";
+
 import Home from "./components/Home/Home";
 import Suites from "./components/Suites/Suites";
 import Reservations2 from "./components/Reservations/Reservations2";
@@ -23,4 +24,3 @@ const routes = (
 );
 
 export default routes;
-    
