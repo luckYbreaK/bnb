@@ -108,7 +108,7 @@ class SuiteModal extends Component {
                             // <Typography variant="body2" key={i}>
                             //     *{key}
                             // </Typography>
-                            <ListItem disableGutters dense>
+                            <ListItem disableGutters dense key={i}>
                                 <ListItemText inset primary={key} />
                             </ListItem>
                         ))}
