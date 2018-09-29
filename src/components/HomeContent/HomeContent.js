@@ -33,7 +33,7 @@ const styles = {
         color: "rgba(18, 88, 47, 1.0)"
     },
     paragraph: {
-        color: "rgba(51, 51, 51, 1.0)"
+        color: "rgba(85, 85, 85, 1.0);"
     },
     buttonText: {
         color: "rgba(255, 255, 255, 0.6)"
@@ -118,43 +118,49 @@ class HomeContent extends Component {
                                     About Us
                                 </Typography>
                             </ExpansionPanelSummary>
-                            <ExpansionPanelDetails>
-                                <Typography component="p" gutterBottom classes={{paragraph: classes.paragraph}}>
+                            <ExpansionPanelDetails style={{ display: "flex", flexDirection: "column" }}>
+                                <Typography paragraph classes={{ paragraph: classes.paragraph }}>
                                     Imagine you travel through time, back to a period of pristine elegance and sophistication, away from the tangled web of distraction and obligation that is modern life. You breathe a sigh of relief; the moment you’ve longed for, even dreamed of, has arrived. At last, you’re able to relax and unwind. Just as you think, “It doesn’t get any better than this!” you look around and realize: though you’ve left the stress of modern life behind, all your favorite modern conveniences somehow survived the space-time continuum unscathed. You blink in disbelief, but it’s true–everything made it safely! Cable, a flat-screen smart TV, high-speed Wi-Fi, online movies, a couples’ tub with jets and a romantic lighting system, they’re all here! In utter delight, you fall back on a remarkably comfortable bed, and sigh.
-                            
-                                
+                                </Typography>
+                                <Typography paragraph classes={{ paragraph: classes.paragraph }}>
                                     This is the experience of a Castle Creek Inn getaway.
-                            
-                                
+                                </Typography>
+                                <Typography paragraph classes={{ paragraph: classes.paragraph }}>
                                     Originally built to be a residence, the Castle is both charming and cozy. You’ll feel right at home as you experience the royal life. Each guest room is unique in design and decor and provides a singular experience to its occupants.
-                            
-                                
+                                </Typography>
+                                <Typography paragraph classes={{ paragraph: classes.paragraph }}>
                                     Enjoy a cozy evening by your private fireplace. Sneak down to the complementary snack bar in the middle of the night to satisfy that sweet tooth, or to pop popcorn for your movie marathon. Wake up to a delicious, full breakfast–the perfect ending to a perfect stay.
-                            
-                                
+                                </Typography>
+                                <Typography paragraph classes={{ paragraph: classes.paragraph }}>
                                     The Castle is just minutes away from fine dining, theaters, hiking trails, ski resorts and other attractions. It’s like Shakespeare said: “Staying at Castle Creek Inn was the best decision I ever made! I penned the famous ‘Romeo & Juliet’ while staying in their luxurious suite of the same name. That led me to ponder, ‘What’s in a name?’ and more inspiring writings were born. I encourage you all to visit the Castle. For all who do are happy.”
-                            
-                                
+                                </Typography>
+                                <Typography paragraph classes={{ paragraph: classes.paragraph }}>
                                     We strive to provide our guests with terrific service and a memorable experience. A beautiful guest room is only the beginning. Included in every stay are the following complimentary amenities and services:
-                            
-                                
-                                    <span style={{display: "block"}}>*2-Person Jetted Tub     *All-Night Snack Bar     *Delicious Breakfast</span>
-                            
-                                
-                                    <span style={{display: "block"}}>*Movie Library     *Wi-Fi     *Mini Fridge</span>
-                            
-                                
-                                    <span style={{display: "block"}}>*Fireplace (Turned on from October 1st – May 1st)</span>
-                            
-                                
+                                </Typography>
+                                <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
+                                    <Typography paragraph classes={{ paragraph: classes.paragraph }} style={{ marginRight: "2rem"}}>*2-Person Jetted Tub</Typography>
+                                    <Typography paragraph classes={{ paragraph: classes.paragraph }} style={{ marginRight: "2rem"}}>*All-Night Snack Bar</Typography>
+                                    <Typography paragraph classes={{ paragraph: classes.paragraph }} style={{ marginRight: "2rem"}}>*Delicious Breakfast</Typography>
+                                    <Typography paragraph classes={{ paragraph: classes.paragraph }} style={{ marginRight: "2rem"}}>*Movie Library </Typography>
+                                    <Typography paragraph classes={{ paragraph: classes.paragraph }} style={{ marginRight: "2rem"}}>*Wi-Fi</Typography>
+                                    <Typography paragraph classes={{ paragraph: classes.paragraph }} style={{ marginRight: "2rem"}}>*Mini Fridge</Typography>
+                                    <Typography paragraph classes={{ paragraph: classes.paragraph }}>*Fireplace (Turned on from October 1st – May 1st)</Typography>
+                                </div>
+                                <Typography paragraph classes={{ paragraph: classes.paragraph }}>
                                     In addition to these, many of our guest rooms also feature:
-                            
-                                    <span style={{display: "block"}}>*Balcony or Patio     *Pool Table     *Walk-In Shower     *Dining Area</span>
-                            
+                                </Typography>
+                                <div style={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
+                                    <Typography paragraph classes={{ paragraph: classes.paragraph }} style={{ marginRight: "2rem"}}>*Balcony or Patio</Typography>
+                                    <Typography paragraph classes={{ paragraph: classes.paragraph }} style={{ marginRight: "2rem"}}>*Pool Table</Typography>
+                                    <Typography paragraph classes={{ paragraph: classes.paragraph }} style={{ marginRight: "2rem"}}>*Walk-In Shower</Typography>
+                                    <Typography paragraph classes={{ paragraph: classes.paragraph }}>*Dining Area</Typography>
+                                </div>
+                                <Typography paragraph classes={{ paragraph: classes.paragraph }}>
                                     Whether you’re looking for a romantic night out, a relaxing escape, or you’re simply in town on business, the Castle is your place. Click the “Rooms” tab for photos and information on each guest room. Thank you for visiting us. We hope to see you soon!
-                            
+                                </Typography>
+                                <Typography paragraph classes={{ paragraph: classes.paragraph }}>
                                     The Castle is just 15 minutes from the SLC International Airport, and downtown Salt Lake City.
-                            </Typography>
+                                </Typography>
                             </ExpansionPanelDetails>
                         </ExpansionPanel>
                     </Card>
