@@ -67,7 +67,7 @@ class Suites extends Component {
 
     render() {
         let { suites, classes } = this.props;
-
+        
         let mappedSuites = suites.map((suite, i) =>
             <div key={i}>
                 <Card style={{ maxWidth: 420, borderRadius: 0 }}>
@@ -124,7 +124,7 @@ class Suites extends Component {
 
         return (
 
-            this.props.suites ?
+            suites.length > 0 ?
                 <div>
 
                     <CarouselSlider
@@ -144,7 +144,7 @@ class Suites extends Component {
 
                 </div>
                 :
-                ""
+                null
         );
     }
 }
